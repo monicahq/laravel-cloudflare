@@ -2,21 +2,27 @@
 
 Add Cloudflare ip addresses to trusted proxies for Laravel.
 
-# Support
+[![Latest Version](https://img.shields.io/packagist/v/monicahq/laravel-cloudflare.svg?style=flat-square)](https://github.com/monicahq/laravel-cloudflare/releases)
 
-This package supports Laravel 5.6 or newer.
 
-# Usage
+# Installation
 
-Include this package to your project dependencies.
-
-Laravel "auto-discovery" feature, discovers automatically this package.
+Install using composer:
+```
+composer require monicahq/laravel-cloudflare
+```
 
 You don't need to add this package to your service providers.
 
-Open "**app/Http/Kernel.php**" then add this line to "**middleware**" array.
+Add the middleware in `app/Http/Kernel.php`, adding a new line in the `middleware` array:
 
-`Monicahq\Cloudflare\Http\Middleware\TrustProxies`
+```php
+Monicahq\Cloudflare\Http\Middleware\TrustProxies::class
+```
+
+# Support
+
+This package supports Laravel 5.6 or newer.
 
 # Refreshing the Cache
 
@@ -28,11 +34,26 @@ That's why, you'll need to every day refresh the cache.
 
 You can use the following command for this.
 
-``php artisan cloudflare:reload``
+```sh
+php artisan cloudflare:reload
+```
+
+## Suggestion: add the command in the schedule.
+
+Add a new line in `app/Console/Kernel.php`, in the `schedule` function:
+
+```php
+$schedule->command('cloudflare:reload')->daily();
+```
+
+
+# View current Cloudflare's IP blocks
 
 You can use the following command to see the cached IP blocks.
 
-``php artisan cloudflare:view``
+```sh
+php artisan cloudflare:view
+```
 
 # License
 
