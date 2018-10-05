@@ -16,7 +16,7 @@ class CloudflareProxies
     /**
      * Retrieve Cloudflare proxies list.
      *
-     * @param  int  $type 
+     * @param  int  $type
      *
      * @return array
      */
@@ -46,11 +46,9 @@ class CloudflareProxies
     {
         try {
             $client = new Client(['base_uri' => 'https://www.cloudflare.com/']);
-            
+
             $response = $client->request('GET', $name);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             throw new UnexpectedValueException('Failed to load trust proxies from Cloudflare server.', $e);
         }
 

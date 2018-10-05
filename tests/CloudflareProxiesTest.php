@@ -2,12 +2,12 @@
 
 namespace Tests;
 
-use Monicahq\Cloudflare\CloudflareProxies;
 use PHPUnit\Framework\TestCase;
+use Monicahq\Cloudflare\CloudflareProxies;
 
 class CloudflareProxiesTest extends TestCase
 {
-    function test_load_empty()
+    public function test_load_empty()
     {
         $loader = new CloudflareProxies();
 
@@ -17,7 +17,7 @@ class CloudflareProxiesTest extends TestCase
         $this->assertCount(0, $ips);
     }
 
-    function test_load_ipv4()
+    public function test_load_ipv4()
     {
         $loader = new CloudflareProxies();
 
@@ -27,7 +27,7 @@ class CloudflareProxiesTest extends TestCase
         $this->assertGreaterThan(5, count($ips));
     }
 
-    function test_load_ipv6()
+    public function test_load_ipv6()
     {
         $loader = new CloudflareProxies();
 
@@ -37,7 +37,7 @@ class CloudflareProxiesTest extends TestCase
         $this->assertGreaterThan(5, count($ips));
     }
 
-    function test_load_all()
+    public function test_load_all()
     {
         $loader = new CloudflareProxies();
 
@@ -47,7 +47,7 @@ class CloudflareProxiesTest extends TestCase
         $this->assertGreaterThan(10, count($ips));
     }
 
-    function test_load_default()
+    public function test_load_default()
     {
         $loader = new CloudflareProxies();
 
