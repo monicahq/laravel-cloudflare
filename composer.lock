@@ -306,16 +306,16 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.7.8",
+            "version": "v5.7.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "9532d673de305b0c0028c0ce60c8952b807d7bc3"
+                "reference": "64df81d3382d876f1c1d3d5481d89c93b61b8279"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/9532d673de305b0c0028c0ce60c8952b807d7bc3",
-                "reference": "9532d673de305b0c0028c0ce60c8952b807d7bc3",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/64df81d3382d876f1c1d3d5481d89c93b61b8279",
+                "reference": "64df81d3382d876f1c1d3d5481d89c93b61b8279",
                 "shasum": ""
             },
             "require": {
@@ -346,11 +346,11 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2018-10-03T14:04:39+00:00"
+            "time": "2018-10-08T13:34:14+00:00"
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v5.7.8",
+            "version": "v5.7.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -402,16 +402,16 @@
         },
         {
             "name": "illuminate/http",
-            "version": "v5.7.8",
+            "version": "v5.7.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/http.git",
-                "reference": "e173bc5c532519198d223a525d6bd1e42dfd6fc2"
+                "reference": "fcf1940b9bde323bdf2500d49dc2ff5580ece19c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/http/zipball/e173bc5c532519198d223a525d6bd1e42dfd6fc2",
-                "reference": "e173bc5c532519198d223a525d6bd1e42dfd6fc2",
+                "url": "https://api.github.com/repos/illuminate/http/zipball/fcf1940b9bde323bdf2500d49dc2ff5580ece19c",
+                "reference": "fcf1940b9bde323bdf2500d49dc2ff5580ece19c",
                 "shasum": ""
             },
             "require": {
@@ -444,11 +444,11 @@
             ],
             "description": "The Illuminate Http package.",
             "homepage": "https://laravel.com",
-            "time": "2018-09-30T20:04:45+00:00"
+            "time": "2018-10-05T19:25:25+00:00"
         },
         {
             "name": "illuminate/session",
-            "version": "v5.7.8",
+            "version": "v5.7.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/session.git",
