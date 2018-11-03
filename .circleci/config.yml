@@ -51,7 +51,7 @@ aliases:
         - *composer_key_base
 
 jobs:
-  build-and-tests:
+  build:
     <<: *defaults
     docker:
       - image: circleci/php:7.2
@@ -67,6 +67,20 @@ jobs:
       - save_cache:
           key: *composer_key
           paths: ~/.composer/cache/
+      - persist_to_workspace:
+          root: *root
+          paths: vendor
+
+  tests:
+    <<: *defaults
+    docker:
+      - image: circleci/php:7.2
+
+    steps:
+      - checkout:
+          <<: *post_checkout
+      - attach_workspace:
+          at: *root
       - *prepare-environment
       - *remove-xdebug
       - *unit-tests
@@ -92,12 +106,14 @@ jobs:
       - *psalm
 
 
-
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build-and-tests
+      - build
+      - tests:
+          requires:
+            - build
       - psalm:
           requires:
-            - build-and-tests
+            - build
