@@ -13,7 +13,9 @@ class TrustedProxyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
+        /** @var \Illuminate\Contracts\Foundation\Application */
+        $app = $this->app;
+        if ($app->runningInConsole()) {
             $this->commands([
                 Commands\Reload::class,
                 Commands\View::class,

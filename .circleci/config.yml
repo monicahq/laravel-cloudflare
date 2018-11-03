@@ -1,0 +1,119 @@
+# CircleCI build for https://circleci.com/gh/monicahq/laravel-cloudflare
+
+version: 2
+
+# Note: YAML anchors allow an object to be re-used, reducing duplication.
+# The ampersand declares an alias for an object, then later the `<<: *name`
+# syntax dereferences it.
+# See http://blog.daemonl.com/2016/02/yaml.html
+# To validate changes, use an online parser, eg.
+# http://yaml-online-parser.appspot.com/
+
+aliases:
+# Some variables
+  - &composer_key_base composer-v1-
+  - &composer_key composer-v1-{{ checksum "composer.lock" }}
+  - &root ~/laravel-cloudflare
+
+# Defaults env
+  - &defaults
+    working_directory: *root
+
+# After checkout, rebase on top of master.
+# Similar to travis behavior, but not quite the same.
+# See https://discuss.circleci.com/t/1662
+  - &post_checkout
+    post: git pull --ff-only origin "refs/pull/${CIRCLE_PULL_REQUEST//*pull\//}/merge"
+
+  - &prepare-environment
+    run:
+      name: Prepare environment
+      command: |
+        mkdir -p results/coverage
+  - &unit-tests
+    run:
+      name: Run unit tests
+      command: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/junit/results.xml --coverage-clover ./results/coverage.xml
+  - &psalm
+    run:
+      name: Run psalm
+      command: vendor/bin/psalm --show-info=false
+  - &remove-xdebug
+    run:
+      name: Remove xdebug
+      command: |
+        sudo rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+  - &restore_composer
+    restore_cache:
+      keys:
+        - *composer_key
+        - *composer_key_base
+
+jobs:
+  build:
+    <<: *defaults
+    docker:
+      - image: circleci/php:7.2
+
+    steps:
+      - checkout:
+          <<: *post_checkout
+      - *prepare-environment
+
+      ## COMPOSER
+      - *restore_composer
+      - run: composer install --no-interaction --no-suggest --ignore-platform-reqs
+      - save_cache:
+          key: *composer_key
+          paths: ~/.composer/cache/
+      - persist_to_workspace:
+          root: *root
+          paths: vendor
+
+  tests:
+    <<: *defaults
+    docker:
+      - image: circleci/php:7.2
+
+    steps:
+      - checkout:
+          <<: *post_checkout
+      - attach_workspace:
+          at: *root
+      - *prepare-environment
+      - *remove-xdebug
+      - *unit-tests
+      - store_test_results:
+          path: results/junit
+      - store_artifacts:
+          path: results/junit
+      - persist_to_workspace:
+          root: *root
+          paths: results
+
+  psalm:
+    <<: *defaults
+    docker:
+      - image: circleci/php:7.2
+
+    steps:
+      - checkout:
+          <<: *post_checkout
+      - attach_workspace:
+          at: *root
+      - *prepare-environment
+      - *psalm
+
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - tests:
+          requires:
+            - build
+      - psalm:
+          requires:
+            - build
