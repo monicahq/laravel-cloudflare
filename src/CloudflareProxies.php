@@ -49,13 +49,13 @@ class CloudflareProxies
 
             $response = $client->request('GET', $name);
         } catch (\Exception $e) {
-            throw new UnexpectedValueException('Failed to load trust proxies from Cloudflare server.', $e);
+            throw new UnexpectedValueException('Failed to load trust proxies from Cloudflare server.', 1, $e);
         }
 
         if ($response->getStatusCode() != 200) {
             throw new UnexpectedValueException('Failed to load trust proxies from Cloudflare server.');
         }
 
-        return array_filter(explode("\n", $response->getBody()));
+        return array_filter(explode("\n", (string) $response->getBody()));
     }
 }
