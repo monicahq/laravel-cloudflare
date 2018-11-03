@@ -61,7 +61,7 @@ This repository licensed under the MIT license.
 
 # Citations
 
-This package was inspired by [the package][1] and forked from [this package][2].
+This package was inspired by [lukasz-adamski/laravel-cloudflare][1] and forked from [ogunkarakus/laravel-cloudflare][2].
 
 [1]: https://github.com/lukasz-adamski/laravel-cloudflare
 [2]: https://github.com/ogunkarakus/laravel-cloudflare
