@@ -17,7 +17,7 @@ You don't need to add this package to your service providers.
 Add the middleware in `app/Http/Kernel.php`, adding a new line in the `middleware` array:
 
 ```php
-Monicahq\Cloudflare\Http\Middleware\TrustProxies::class
+\Monicahq\Cloudflare\Http\Middleware\TrustProxies::class
 ```
 
 # Support
