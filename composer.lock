@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "a0cb1b35b1d42e01141b734fdbc9ee7d",
@@ -3221,16 +3221,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "2.0.16",
+            "version": "2.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "f7a37d05b93f85a8310c908fddf603b4ca82f512"
+                "reference": "ead7d62d489d58edb4fa03b21e4f0bc87a476211"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/f7a37d05b93f85a8310c908fddf603b4ca82f512",
-                "reference": "f7a37d05b93f85a8310c908fddf603b4ca82f512",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/ead7d62d489d58edb4fa03b21e4f0bc87a476211",
+                "reference": "ead7d62d489d58edb4fa03b21e4f0bc87a476211",
                 "shasum": ""
             },
             "require": {
@@ -3292,7 +3292,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2018-11-02T17:09:04+00:00"
+            "time": "2018-11-09T19:18:46+00:00"
         },
         {
             "name": "webmozart/assert",
