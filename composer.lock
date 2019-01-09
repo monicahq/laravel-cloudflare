@@ -256,16 +256,16 @@
         },
         {
             "name": "illuminate/console",
-            "version": "5.7.19",
+            "version": "v5.7.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/console.git",
-                "reference": "12b5e9844144ce4c72abf527c5b002266ad01e97"
+                "reference": "7d5d3e658fef12021ce997a38d5d17381ee5ec39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/console/zipball/12b5e9844144ce4c72abf527c5b002266ad01e97",
-                "reference": "12b5e9844144ce4c72abf527c5b002266ad01e97",
+                "url": "https://api.github.com/repos/illuminate/console/zipball/7d5d3e658fef12021ce997a38d5d17381ee5ec39",
+                "reference": "7d5d3e658fef12021ce997a38d5d17381ee5ec39",
                 "shasum": ""
             },
             "require": {
@@ -302,11 +302,11 @@
             ],
             "description": "The Illuminate Console package.",
             "homepage": "https://laravel.com",
-            "time": "2018-12-13T13:53:32+00:00"
+            "time": "2019-01-04T15:39:20+00:00"
         },
         {
             "name": "illuminate/contracts",
-            "version": "5.7.19",
+            "version": "v5.7.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
