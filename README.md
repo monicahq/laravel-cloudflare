@@ -3,6 +3,7 @@
 Add Cloudflare ip addresses to trusted proxies for Laravel.
 
 [![Latest Version](https://img.shields.io/packagist/v/monicahq/laravel-cloudflare.svg?style=flat-square)](https://github.com/monicahq/laravel-cloudflare/releases)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmonicahq%2Flaravel-cloudflare.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmonicahq%2Flaravel-cloudflare?ref=badge_shield)
 
 
 # Installation
@@ -58,6 +59,9 @@ php artisan cloudflare:view
 # License
 
 This repository licensed under the MIT license.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmonicahq%2Flaravel-cloudflare.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmonicahq%2Flaravel-cloudflare?ref=badge_large)
 
 # Citations
 
