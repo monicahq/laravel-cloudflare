@@ -42,7 +42,7 @@ class CloudflareProxiesTest extends FeatureTestCase
     public function test_load_ipv6()
     {
         $mock = new MockHandler([
-            new Response(200, [], '::1/32')
+            new Response(200, [], '::1/32'),
         ]);
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
@@ -53,7 +53,7 @@ class CloudflareProxiesTest extends FeatureTestCase
 
         $this->assertNotNull($ips);
         $this->assertEquals([
-            '::1/32'
+            '::1/32',
         ], $ips);
     }
 
@@ -61,7 +61,7 @@ class CloudflareProxiesTest extends FeatureTestCase
     {
         $mock = new MockHandler([
             new Response(200, [], '0.0.0.0/20'),
-            new Response(200, [], '::1/32')
+            new Response(200, [], '::1/32'),
         ]);
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
@@ -73,7 +73,7 @@ class CloudflareProxiesTest extends FeatureTestCase
         $this->assertNotNull($ips);
         $this->assertEquals([
             '0.0.0.0/20',
-            '::1/32'
+            '::1/32',
         ], $ips);
     }
 
@@ -82,7 +82,7 @@ class CloudflareProxiesTest extends FeatureTestCase
         $me = $this;
         $mock = new MockHandler([
             new Response(200, [], '0.0.0.0/20'),
-            new Response(200, [], '::1/32')
+            new Response(200, [], '::1/32'),
         ]);
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
@@ -95,7 +95,7 @@ class CloudflareProxiesTest extends FeatureTestCase
 
         $this->assertEquals([
             '0.0.0.0/20',
-            '::1/32'
+            '::1/32',
         ], $ips);
     }
 
@@ -105,10 +105,12 @@ class CloudflareProxiesTest extends FeatureTestCase
         $mock = new MockHandler([
             function (\Psr\Http\Message\RequestInterface $request, array $options) use ($me) {
                 $me->assertEquals('https://www.cloudflare.com/ips-v4', (string) $request->getUri());
+
                 return new Response(200, [], '0.0.0.0/20');
             },
             function (\Psr\Http\Message\RequestInterface $request, array $options) use ($me) {
                 $me->assertEquals('https://www.cloudflare.com/ips-v6', (string) $request->getUri());
+
                 return new Response(200, [], '::1/32');
             },
         ]);

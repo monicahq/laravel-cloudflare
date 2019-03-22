@@ -64,7 +64,7 @@ class TrustedProxyServiceProvider extends ServiceProvider implements DeferrableP
     public function provides()
     {
         return [
-            CloudflareProxies::class
+            CloudflareProxies::class,
         ];
     }
 }

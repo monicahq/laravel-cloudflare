@@ -16,7 +16,8 @@ class MiddlewareTest extends FeatureTestCase
             ->andReturn(['expect']);
 
         $request = new Request();
-        (new TrustProxies($this->app->make('config')))->handle($request, function() {});
+        (new TrustProxies($this->app->make('config')))->handle($request, function () {
+        });
 
         $this->assertEquals(
             $request->getTrustedProxies(),
