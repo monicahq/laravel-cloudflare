@@ -3,9 +3,8 @@
 namespace Monicahq\Cloudflare;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Support\DeferrableProvider;
 
-class TrustedProxyServiceProvider extends ServiceProvider implements DeferrableProvider
+class TrustedProxyServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any package services.
@@ -44,27 +43,16 @@ class TrustedProxyServiceProvider extends ServiceProvider implements DeferrableP
 
         /** @var \Illuminate\Contracts\Foundation\Application */
         $app = $this->app;
-        $app->singleton(CloudflareProxies::class, function ($app) {
-            return new CloudflareProxies($app);
-        });
 
         if ($app->runningInConsole()) {
+            $app->singleton(CloudflareProxies::class, function ($app) {
+                return new CloudflareProxies($app);
+            });
+
             $this->commands([
                 Commands\Reload::class,
                 Commands\View::class,
             ]);
         }
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return [
-            CloudflareProxies::class
-        ];
     }
 }
