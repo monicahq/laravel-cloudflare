@@ -46,7 +46,7 @@ class TrustedProxyServiceProvider extends ServiceProvider
 
         if ($app->runningInConsole()) {
             $app->singleton(CloudflareProxies::class, function ($app) {
-                return new CloudflareProxies($app);
+                return new CloudflareProxies($app->make('config'));
             });
 
             $this->commands([
