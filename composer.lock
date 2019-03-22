@@ -2449,16 +2449,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "7.0.2",
+            "version": "7.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "cfca9c5f7f2694ca0c7749ffb142927d9f05250f"
+                "reference": "0317a769a81845c390e19684d9ba25d7f6aa4707"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/cfca9c5f7f2694ca0c7749ffb142927d9f05250f",
-                "reference": "cfca9c5f7f2694ca0c7749ffb142927d9f05250f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/0317a769a81845c390e19684d9ba25d7f6aa4707",
+                "reference": "0317a769a81845c390e19684d9ba25d7f6aa4707",
                 "shasum": ""
             },
             "require": {
@@ -2508,7 +2508,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-02-15T13:40:27+00:00"
+            "time": "2019-02-26T07:38:26+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2603,16 +2603,16 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "2.0.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "8b8454ea6958c3dee38453d3bd571e023108c91f"
+                "reference": "8b389aebe1b8b0578430bda0c7c95a829608e059"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/8b8454ea6958c3dee38453d3bd571e023108c91f",
-                "reference": "8b8454ea6958c3dee38453d3bd571e023108c91f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/8b389aebe1b8b0578430bda0c7c95a829608e059",
+                "reference": "8b389aebe1b8b0578430bda0c7c95a829608e059",
                 "shasum": ""
             },
             "require": {
@@ -2624,7 +2624,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.1-dev"
                 }
             },
             "autoload": {
@@ -2648,7 +2648,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2018-02-01T13:07:23+00:00"
+            "time": "2019-02-20T10:12:59+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -2701,16 +2701,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.0.4",
+            "version": "8.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a7af0201285445c9c73c4bdf869c486e36b41604"
+                "reference": "19cbed2120839772c4a00e8b28456b0c77d1a7b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a7af0201285445c9c73c4bdf869c486e36b41604",
-                "reference": "a7af0201285445c9c73c4bdf869c486e36b41604",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/19cbed2120839772c4a00e8b28456b0c77d1a7b4",
+                "reference": "19cbed2120839772c4a00e8b28456b0c77d1a7b4",
                 "shasum": ""
             },
             "require": {
@@ -2729,7 +2729,7 @@
                 "phpunit/php-code-coverage": "^7.0",
                 "phpunit/php-file-iterator": "^2.0.1",
                 "phpunit/php-text-template": "^1.2.1",
-                "phpunit/php-timer": "^2.0",
+                "phpunit/php-timer": "^2.1",
                 "sebastian/comparator": "^3.0",
                 "sebastian/diff": "^3.0",
                 "sebastian/environment": "^4.1",
@@ -2779,7 +2779,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-02-18T09:23:05+00:00"
+            "time": "2019-03-16T07:33:46+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
