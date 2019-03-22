@@ -3,7 +3,7 @@
 Add Cloudflare ip addresses to trusted proxies for Laravel.
 
 [![Latest Version](https://img.shields.io/packagist/v/monicahq/laravel-cloudflare.svg?style=flat-square)](https://github.com/monicahq/laravel-cloudflare/releases)
-[![Downloads](https://img.shields.io/packagist/dt/monicahq/laravel-cloudflare.svg?style=flat-square)](https://packagist.org/packages/monicahq/laravel-cloudflare/releases)
+[![Downloads](https://img.shields.io/packagist/dt/monicahq/laravel-cloudflare.svg?style=flat-square)](https://packagist.org/packages/monicahq/laravel-cloudflare)
 [![Circle CI](https://img.shields.io/circleci/project/github/monicahq/laravel-cloudflare.svg?style=flat-square)](https://circleci.com/gh/monicahq/laravel-cloudflare/tree/master)
 [![Coverage Status](https://img.shields.io/sonar/https/sonarcloud.io/monicahq_laravel-cloudflare/coverage.svg?style=flat-square)](https://sonarcloud.io/dashboard?id=monicahq_laravel-cloudflare)
 
