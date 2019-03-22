@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
-         bootstrap="./vendor/autoload.php"
+         bootstrap="vendor/autoload.php"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
@@ -19,4 +19,8 @@
             <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_KEY" value="base64:uA/XEme0vpegJz/rKSk3ys2uzEfXZA0Ca2P0e1M8vRU="/>
+    </php>
 </phpunit>
