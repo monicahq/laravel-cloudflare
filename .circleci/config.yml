@@ -66,23 +66,6 @@ jobs:
           root: *root
           paths: vendor
 
-  tests-7.1:
-    <<: *defaults
-    docker:
-      - image: circleci/php:7.1
-
-    steps:
-      - checkout:
-      - attach_workspace:
-          at: *root
-      - *prepare-environment
-      - *remove-xdebug
-      - *unit-tests
-      - store_test_results:
-          path: results/junit
-      - store_artifacts:
-          path: results/junit
-
   tests-7.2:
     <<: *defaults
     docker:
@@ -164,9 +147,6 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - tests-7.1:
-          requires:
-            - build
       - tests-7.2:
           requires:
             - build
