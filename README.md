@@ -25,9 +25,9 @@ Add the middleware in `app/Http/Kernel.php`, adding a new line in the `middlewar
 
 ## Existing Laravel application
 
-This middleware uses [fideloper/proxy][4] as a backend, so you can removes the other `TrustProxies` line from the `middleware` array.
+This middleware uses [fideloper/proxy][4] as a backend, so you can remove the other `TrustProxies` line from the `middleware` array.
 
-Another option is to extends the [App\Http\Middleware\TrustProxies.php][3] file to `Monicahq\Cloudflare\Http\Middleware\TrustProxies`:
+Another option is to extend the [App\Http\Middleware\TrustProxies][3] class to `Monicahq\Cloudflare\Http\Middleware\TrustProxies`:
 
 ```php
 namespace App\Http\Middleware;
@@ -39,6 +39,9 @@ class TrustProxies extends Middleware
 {
     ...
 ```
+
+If the cloudflare ips are detected, they will be used, and if not the trustproxies one will be.
+
 
 # Refreshing the Cache
 
