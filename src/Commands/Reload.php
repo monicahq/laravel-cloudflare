@@ -30,9 +30,10 @@ class Reload extends Command
      */
     public function handle()
     {
-        $loader = new CloudflareProxies();
+        /** @var CloudflareProxies */
+        $loader = $this->laravel->make(CloudflareProxies::class);
 
-        Cache::forever('cloudflare.proxies', $loader->load());
+        Cache::forever($this->laravel->make('config')->get('laravelcloudflare.cache'), $loader->load());
 
         $this->info('Cloudflare\'s IP blocks have been reloaded.', OutputInterface::VERBOSITY_VERBOSE);
     }
