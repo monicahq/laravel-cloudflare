@@ -2,69 +2,25 @@
 
 namespace Monicahq\Cloudflare\Http\Middleware;
 
-use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Contracts\Config\Repository;
+use Fideloper\Proxy\TrustProxies as Middleware;
 
-class TrustProxies
+class TrustProxies extends Middleware
 {
     /**
-     * The config repository instance.
+     * Sets the trusted proxies on the request to the value of Cloudflare ips.
      *
-     * @var \Illuminate\Contracts\Config\Repository
+     * @param \Illuminate\Http\Request $request
      */
-    protected $config;
-
-    /**
-     * Create a new middleware instance.
-     *
-     * @param \Illuminate\Contracts\Config\Repository $config
-     */
-    public function __construct(Repository $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * Handle an incoming request.
-     *
-     * @param  Request  $request
-     * @param  Closure  $next
-     * @return mixed
-     */
-    public function handle(Request $request, Closure $next)
+    public function setTrustedProxyIpAddresses(Request $request)
     {
         $proxies = Cache::get($this->config->get('laravelcloudflare.cache'), []);
 
         if (! empty($proxies)) {
-            $request->setTrustedProxies($proxies, $this->getTrustedHeaderNames());
+            $this->$proxies = $proxies;
         }
 
-        return $next($request);
-    }
-
-    /**
-     * Retrieve trusted header name(s), falling back to defaults if config not set.
-     *
-     * @return int A bit field of Request::HEADER_*, to set which headers to trust from your proxies.
-     */
-    protected function getTrustedHeaderNames()
-    {
-        $headers = $this->config->get('laravelcloudflare.headers');
-        switch ($headers) {
-            case 'HEADER_X_FORWARDED_AWS_ELB':
-            case Request::HEADER_X_FORWARDED_AWS_ELB:
-                $headers = Request::HEADER_X_FORWARDED_AWS_ELB;
-                break;
-            case 'HEADER_FORWARDED':
-            case Request::HEADER_FORWARDED:
-                $headers = Request::HEADER_FORWARDED;
-                break;
-            default:
-                $headers = Request::HEADER_X_FORWARDED_ALL;
-        }
-
-        return $headers;
+        parent::setTrustedProxyIpAddresses($request);
     }
 }

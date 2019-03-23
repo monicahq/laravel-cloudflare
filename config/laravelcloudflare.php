@@ -6,18 +6,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | The headers that should be used to detect proxies
-    |--------------------------------------------------------------------------
-    |
-    | This header is sent to the server behind.
-    | HEADER_X_FORWARDED_ALL correspond to X-Forwarded-*
-    |
-    */
-
-    'headers' => Request::HEADER_X_FORWARDED_ALL,
-
-    /*
-    |--------------------------------------------------------------------------
     | Name of the cache to store values of the proxies
     |--------------------------------------------------------------------------
     |
