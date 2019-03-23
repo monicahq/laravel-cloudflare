@@ -13,7 +13,7 @@ class TrustProxies extends Middleware
      *
      * @param \Illuminate\Http\Request $request
      */
-    public function setTrustedProxyIpAddresses(Request $request)
+    protected function setTrustedProxyIpAddresses(Request $request)
     {
         $proxies = Cache::get($this->config->get('laravelcloudflare.cache'), []);
 
