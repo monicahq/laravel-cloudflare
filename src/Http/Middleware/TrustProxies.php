@@ -18,7 +18,7 @@ class TrustProxies extends Middleware
         $proxies = Cache::get($this->config->get('laravelcloudflare.cache'), []);
 
         if (! empty($proxies)) {
-            $this->$proxies = $proxies;
+            $this->proxies = $proxies;
         }
 
         parent::setTrustedProxyIpAddresses($request);
