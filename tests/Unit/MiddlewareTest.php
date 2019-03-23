@@ -17,7 +17,8 @@ class MiddlewareTest extends FeatureTestCase
 
         $request = new Request();
 
-        (new TrustProxies($this->app->make('config')))->handle($request, function () {});
+        (new TrustProxies($this->app->make('config')))->handle($request, function () {
+        });
 
         $this->assertEquals(
             $request->getTrustedProxies(),
@@ -33,7 +34,8 @@ class MiddlewareTest extends FeatureTestCase
 
         $request = new Request();
 
-        (new TrustProxies($this->app->make('config')))->handle($request, function () {});
+        (new TrustProxies($this->app->make('config')))->handle($request, function () {
+        });
 
         $this->assertEquals(
             $request->getTrustedProxies(),
