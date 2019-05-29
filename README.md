@@ -85,7 +85,7 @@ This file contains some configurations, but you may not need to change them norm
 
 # Support
 
-This package supports Laravel 5.6 or newer.
+This package supports Laravel 5.5 or newer.
 
 # License
 
