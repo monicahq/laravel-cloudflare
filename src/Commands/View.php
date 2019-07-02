@@ -28,7 +28,7 @@ class View extends Command
      */
     public function handle()
     {
-        $proxies = Cache::get('cloudflare.proxies', []);
+        $proxies = Cache::get($this->laravel->make('config')->get('laravelcloudflare.cache'), []);
 
         $rows = array_map(function ($value) {
             return [
