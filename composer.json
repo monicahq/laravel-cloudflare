@@ -25,7 +25,7 @@
     "require-dev": {
         "laravel/framework": "^5.6 || ^6.0",
         "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^3.8",
+        "orchestra/testbench": "^3.8 || ^4.0",
         "phpunit/phpunit": "^7.4 || ^8.0",
         "vimeo/psalm": "^2.0 || ^3.0"
     },

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9d73ec876d84ec7320fd3980f468065",
+    "content-hash": "57f84dbc7f304c6c3491a1b84feceee1",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -3594,29 +3594,29 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v3.9.1",
+            "version": "v4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "b02947e93f339cec6860d4216a6ac8c5a3abaa81"
+                "reference": "a10dbc9dba64c6fb98b5169f4daf476691596968"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/b02947e93f339cec6860d4216a6ac8c5a3abaa81",
-                "reference": "b02947e93f339cec6860d4216a6ac8c5a3abaa81",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/a10dbc9dba64c6fb98b5169f4daf476691596968",
+                "reference": "a10dbc9dba64c6fb98b5169f4daf476691596968",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^6.0",
-                "mockery/mockery": "^1.2",
-                "orchestra/testbench-core": "^3.9.0",
+                "mockery/mockery": "^1.2.3",
+                "orchestra/testbench-core": "^4.0",
                 "php": ">=7.2",
-                "phpunit/phpunit": "^8.0"
+                "phpunit/phpunit": "^8.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.9-dev"
+                    "dev-master": "4.0-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3640,20 +3640,20 @@
                 "orchestral",
                 "testing"
             ],
-            "time": "2019-09-24T06:17:46+00:00"
+            "time": "2019-09-24T06:46:06+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v3.9.2",
+            "version": "v4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "4b6b62c5fe8d891107eda65c5237f13932fedb1d"
+                "reference": "4f098fe9bc64c23ea0b7c4ae12c0e26cb270e8e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/4b6b62c5fe8d891107eda65c5237f13932fedb1d",
-                "reference": "4b6b62c5fe8d891107eda65c5237f13932fedb1d",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/4f098fe9bc64c23ea0b7c4ae12c0e26cb270e8e7",
+                "reference": "4f098fe9bc64c23ea0b7c4ae12c0e26cb270e8e7",
                 "shasum": ""
             },
             "require": {
@@ -3661,22 +3661,22 @@
                 "php": ">=7.2"
             },
             "require-dev": {
-                "laravel/framework": "^6.0",
+                "laravel/framework": "^6.2",
                 "laravel/laravel": "dev-master",
                 "mockery/mockery": "^1.2.3",
                 "phpunit/phpunit": "^8.3"
             },
             "suggest": {
-                "laravel/framework": "Required for testing (^6.0).",
-                "mockery/mockery": "Allow to use Mockery for testing (^1.0).",
-                "orchestra/testbench-browser-kit": "Allow to use legacy Laravel BrowserKit for testing (^3.9).",
-                "orchestra/testbench-dusk": "Allow to use Laravel Dusk for testing (^3.9).",
-                "phpunit/phpunit": "Allow to use PHPUnit for testing (^8.0)."
+                "laravel/framework": "Required for testing (^6.2).",
+                "mockery/mockery": "Allow using Mockery for testing (^1.2.3).",
+                "orchestra/testbench-browser-kit": "Allow using legacy Laravel BrowserKit for testing (^4.0).",
+                "orchestra/testbench-dusk": "Allow using Laravel Dusk for testing (^4.0).",
+                "phpunit/phpunit": "Allow using PHPUnit for testing (^8.3)."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.9-dev"
+                    "dev-master": "4.0-dev"
                 }
             },
             "autoload": {
@@ -3705,7 +3705,7 @@
                 "orchestral",
                 "testing"
             ],
-            "time": "2019-09-15T07:07:58+00:00"
+            "time": "2019-10-11T01:50:36+00:00"
         },
         {
             "name": "phar-io/manifest",
