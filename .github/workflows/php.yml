@@ -1,14 +1,16 @@
-name: PHP Composer
+name: Laravel cloudflare workflow
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   tests:
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operating-system }}
     strategy:
+      fail-fast: false
+      max-parallel: 6
       matrix:
-        php_version: ['7.2', '7.3', '7.4']
+        operating-system: [ubuntu-latest, macOS-latest]
+        php-version: ['7.2', '7.3', '7.4']
         
     steps:
     - uses: actions/checkout@v1
@@ -28,8 +30,92 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - name: Cache composer files
+      uses: actions/cache@v1        
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-composer-${{ hashFiles('**/composer.lock') }}
+          ${{ runner.os }}-composer-
+
     - name: Install dependencies
       run: composer install --no-interaction --no-suggest --ignore-platform-reqs
 
     - name: Run test suite
       run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/junit/results.xml --coverage-clover ./results/coverage.xml
+
+    - name: Store results
+      if: matrix.php_version == '7.2'
+      uses: actions/upload-artifact@v1
+      with:
+        name: results
+        path: results
+
+  psalm:
+    runs-on: [ubuntu-latest]
+        
+    steps:
+    - uses: actions/checkout@v1
+      
+    - name: Use php 7.2
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: 7.2
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - name: Cache composer files
+      uses: actions/cache@v1        
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-composer-${{ hashFiles('**/composer.lock') }}
+          ${{ runner.os }}-composer-
+
+    - name: Install dependencies
+      run: composer install --no-interaction --no-suggest --ignore-platform-reqs
+
+    - name: Run psalm
+      run: vendor/bin/psalm --show-info=false
+
+  reporting:
+    needs: tests
+    runs-on: [ubuntu-latest]
+    steps:
+    - name: Use php 7.2
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: 7.2
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - name: Cache composer files
+      uses: actions/cache@v1        
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-composer-${{ hashFiles('**/composer.lock') }}
+          ${{ runner.os }}-composer-
+
+    - name: Install dependencies
+      run: composer install --no-interaction --no-suggest --ignore-platform-reqs
+
+    - name: Download results
+      uses: actions/download-artifact@v1
+      with:
+        name: results
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v1.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    
