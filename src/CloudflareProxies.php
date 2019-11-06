@@ -2,9 +2,9 @@
 
 namespace Monicahq\Cloudflare;
 
-use UnexpectedValueException;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Contracts\Config\Repository;
+use UnexpectedValueException;
 
 class CloudflareProxies
 {

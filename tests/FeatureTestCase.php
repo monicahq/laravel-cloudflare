@@ -2,8 +2,8 @@
 
 namespace Monicahq\Cloudflare\Tests;
 
-use Orchestra\Testbench\TestCase;
 use Monicahq\Cloudflare\TrustedProxyServiceProvider;
+use Orchestra\Testbench\TestCase;
 
 class FeatureTestCase extends TestCase
 {
