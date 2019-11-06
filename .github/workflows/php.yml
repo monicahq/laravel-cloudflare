@@ -1,0 +1,35 @@
+name: PHP Composer
+
+on: [push]
+
+jobs:
+  tests:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php_version: ['7.2', '7.3', '7.4']
+        
+    steps:
+    - uses: actions/checkout@v1
+      
+    - name: Use php ${{ matrix.php_version }}
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: ${{ matrix.php_version }}
+        coverage: none
+    - name: Check PHP Version
+      run: php -v
+    - name: Check Composer Version
+      run: composer -V
+    - name: Check PHP Extensions
+      run: php -m
+  
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install dependencies
+      run: composer install --no-interaction --no-suggest --ignore-platform-reqs
+
+    - name: Run test suite
+      run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/junit/results.xml --coverage-clover ./results/coverage.xml
