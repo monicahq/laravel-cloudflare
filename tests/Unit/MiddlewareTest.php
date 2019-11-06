@@ -4,8 +4,8 @@ namespace Monicahq\Cloudflare\Tests\Unit;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Monicahq\Cloudflare\Tests\FeatureTestCase;
 use Monicahq\Cloudflare\Http\Middleware\TrustProxies;
+use Monicahq\Cloudflare\Tests\FeatureTestCase;
 
 class MiddlewareTest extends FeatureTestCase
 {

@@ -3,9 +3,9 @@
 namespace Monicahq\Cloudflare\Tests\Unit;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Handler\MockHandler;
 use Monicahq\Cloudflare\CloudflareProxies;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
 

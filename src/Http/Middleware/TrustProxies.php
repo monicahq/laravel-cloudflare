@@ -2,9 +2,9 @@
 
 namespace Monicahq\Cloudflare\Http\Middleware;
 
+use Fideloper\Proxy\TrustProxies as Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Fideloper\Proxy\TrustProxies as Middleware;
 
 class TrustProxies extends Middleware
 {
