@@ -14,18 +14,18 @@ jobs:
         
     steps:
     - uses: actions/checkout@v1
-      
-    - name: Use php ${{ matrix.php-version }}
-      uses: shivammathur/setup-php@master
-      with:
-        php-version: ${{ matrix.php-version }}
-        coverage: none
-    - name: Check PHP Version
-      run: php -v
-    - name: Check Composer Version
-      run: composer -V
-    - name: Check PHP Extensions
-      run: php -m
+
+    - name: 'Set php version ${{ matrix.php-version }}'
+      run: |
+        sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}
+        sudo update-alternatives --set phar /usr/bin/phar${{ matrix.php-version }}
+        sudo update-alternatives --set phpdbg /usr/bin/phpdbg${{ matrix.php-version }}
+        sudo update-alternatives --set php-cgi /usr/bin/php-cgi${{ matrix.php-version }}
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar${{ matrix.php-version }}
+        sudo apt-get install php${{ matrix.php-version }}-intl
+        php -version
+        composer -V
+        php -m
   
     - name: Validate composer.json and composer.lock
       run: composer validate
