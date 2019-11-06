@@ -9,23 +9,25 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: [ubuntu-latest]
-        php-version: ['7.2', '7.3']
+        php-version: ['7.2', '7.3', '7.4']
         
     steps:
     - uses: actions/checkout@v1
 
-#    - name: Setup PHP ${{ matrix.php-version }}
-#      uses: shivammathur/setup-php@master
-#      with:
-#        php-version: ${{ matrix.php-version }}
-#        coverage: none
     - name: Setup PHP ${{ matrix.php-version }}
+      if: matrix.php-version != '7.4' && matrix.operating-system == 'ubuntu-latest'
       run: |
         sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}
         sudo update-alternatives --set phar /usr/bin/phar${{ matrix.php-version }}
         sudo update-alternatives --set phpdbg /usr/bin/phpdbg${{ matrix.php-version }}
         sudo update-alternatives --set php-cgi /usr/bin/php-cgi${{ matrix.php-version }}
         sudo update-alternatives --set phar.phar /usr/bin/phar.phar${{ matrix.php-version }}
+    - name: Setup PHP ${{ matrix.php-version }}
+      if: matrix.php-version == '7.4' || matrix.operating-system != 'ubuntu-latest'
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: ${{ matrix.php-version }}
+        coverage: none
     - name: Check PHP Version
       run: php -v
     - name: Check Composer Version
@@ -45,7 +47,7 @@ jobs:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.OS }}-composer-${{ hashFiles('**/composer.lock') }}
+          ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           ${{ runner.os }}-composer-
 
     - name: Install dependencies
@@ -55,17 +57,16 @@ jobs:
       run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/junit/results.xml --coverage-clover ./results/coverage.xml
 
     - name: Store results
-      if: matrix.php-version == '7.2'
+      if: matrix.php-version == '7.2' && matrix.operating-system == 'ubuntu-latest'
       uses: actions/upload-artifact@v1
       with:
         name: results
         path: results
 
   psalm:
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        operating-system: [ubuntu-latest]
         php-version: ['7.2']
         
     steps:
@@ -88,7 +89,7 @@ jobs:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.OS }}-composer-${{ hashFiles('**/composer.lock') }}
+          ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           ${{ runner.os }}-composer-
 
     - name: Install dependencies
@@ -99,10 +100,9 @@ jobs:
 
   reporting:
     needs: tests
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        operating-system: [ubuntu-latest]
         php-version: ['7.2']
         
     steps:
@@ -126,7 +126,7 @@ jobs:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.OS }}-composer-${{ hashFiles('**/composer.lock') }}
+          ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           ${{ runner.os }}-composer-
 
     - name: Install dependencies
