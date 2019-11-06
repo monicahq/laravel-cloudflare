@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: [ubuntu-latest]
-        php-version: ['7.1', '7.2', '7.3']
+        php-version: ['7.2', '7.3']
         
     steps:
     - uses: actions/checkout@v1
@@ -62,15 +62,22 @@ jobs:
         path: results
 
   psalm:
-    runs-on: [ubuntu-latest]
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-version: ['7.2']
         
     steps:
     - uses: actions/checkout@v1
       
-    - name: Use php 7.2
-      uses: shivammathur/setup-php@master
-      with:
-        php-version: 7.2
+    - name: Setup PHP ${{ matrix.php-version }}
+      run: |
+        sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}
+        sudo update-alternatives --set phar /usr/bin/phar${{ matrix.php-version }}
+        sudo update-alternatives --set phpdbg /usr/bin/phpdbg${{ matrix.php-version }}
+        sudo update-alternatives --set php-cgi /usr/bin/php-cgi${{ matrix.php-version }}
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar${{ matrix.php-version }}
 
     - name: Get Composer Cache Directory
       id: composer-cache
@@ -92,13 +99,23 @@ jobs:
 
   reporting:
     needs: tests
-    runs-on: [ubuntu-latest]
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-version: ['7.2']
+        
     steps:
     - uses: actions/checkout@v1
-    - name: Use php 7.2
-      uses: shivammathur/setup-php@master
-      with:
-        php-version: 7.2
+      
+    - name: Setup PHP ${{ matrix.php-version }}
+      run: |
+        sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}
+        sudo update-alternatives --set phar /usr/bin/phar${{ matrix.php-version }}
+        sudo update-alternatives --set phpdbg /usr/bin/phpdbg${{ matrix.php-version }}
+        sudo update-alternatives --set php-cgi /usr/bin/php-cgi${{ matrix.php-version }}
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar${{ matrix.php-version }}
+
 
     - name: Get Composer Cache Directory
       id: composer-cache
