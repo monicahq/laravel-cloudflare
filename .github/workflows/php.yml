@@ -10,7 +10,7 @@ jobs:
       matrix:
         operating-system: [ubuntu-latest]
         php-version: ['7.2', '7.3', '7.4']
-        
+
     steps:
     - uses: actions/checkout@v1
 
@@ -34,7 +34,7 @@ jobs:
       run: composer -V
     - name: Check PHP Extensions
       run: php -m
-  
+
     - name: Validate composer.json and composer.lock
       run: composer validate
 
@@ -42,7 +42,7 @@ jobs:
       id: composer-cache
       run: echo "::set-output name=dir::$(composer config cache-files-dir)"
     - name: Cache composer files
-      uses: actions/cache@v1        
+      uses: actions/cache@v1
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -68,10 +68,10 @@ jobs:
     strategy:
       matrix:
         php-version: ['7.2']
-        
+
     steps:
     - uses: actions/checkout@v1
-      
+
     - name: Setup PHP ${{ matrix.php-version }}
       run: |
         sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}
@@ -84,7 +84,7 @@ jobs:
       id: composer-cache
       run: echo "::set-output name=dir::$(composer config cache-files-dir)"
     - name: Cache composer files
-      uses: actions/cache@v1        
+      uses: actions/cache@v1
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -104,10 +104,10 @@ jobs:
     strategy:
       matrix:
         php-version: ['7.2']
-        
+
     steps:
     - uses: actions/checkout@v1
-      
+
     - name: Setup PHP ${{ matrix.php-version }}
       run: |
         sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}
@@ -121,7 +121,7 @@ jobs:
       id: composer-cache
       run: echo "::set-output name=dir::$(composer config cache-files-dir)"
     - name: Cache composer files
-      uses: actions/cache@v1        
+      uses: actions/cache@v1
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -138,8 +138,10 @@ jobs:
         name: results
 
     - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v1.1
+      uses: SonarSource/sonarcloud-github-action@master
+      with:
+        projectBaseDir: $GITHUB_WORKSPACE
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    
+
