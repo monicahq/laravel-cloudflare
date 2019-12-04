@@ -137,10 +137,11 @@ jobs:
       with:
         name: results
 
+    - name: Fix coverage
+      run: sed -i -e 's/$GITHUB_WORKSPACE//g' results/coverage.xml
+
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
-      with:
-        projectBaseDir: $GITHUB_WORKSPACE
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
