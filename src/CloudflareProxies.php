@@ -46,7 +46,7 @@ class CloudflareProxies
      * @param  int  $type
      * @return array
      */
-    public function load($type = self::IP_VERSION_ANY) : array
+    public function load($type = self::IP_VERSION_ANY): array
     {
         $proxies = [];
 
@@ -68,7 +68,7 @@ class CloudflareProxies
      * @param  string  $name requet name
      * @return array
      */
-    protected function retrieve($name) : array
+    protected function retrieve($name): array
     {
         try {
             $url = $this->config->get('laravelcloudflare.url').'/'.$name;
