@@ -4,7 +4,7 @@
 *
 
 ### Enhancements:
-*
+* Support Laravel 7 and upper
 
 ### Fixes:
 *
