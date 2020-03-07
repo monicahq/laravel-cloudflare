@@ -4,12 +4,16 @@
 *
 
 ### Enhancements:
-* Support Laravel 7 and upper
+*
 
 ### Fixes:
 *
 
 # RELEASED VERSIONS:
+
+## 1.4.0 - 2020-03-07
+ ### Enhancements:
+  * Support Laravel 7 and higher
 
 ## 1.3.0 - 2019-09-26
  ### Enhancements:
