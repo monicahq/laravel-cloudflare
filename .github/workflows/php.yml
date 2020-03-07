@@ -48,7 +48,7 @@ jobs:
       run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/junit/results.xml --coverage-clover ./results/coverage.xml
 
     - name: Store results
-      if: matrix.php-version == '7.2' && matrix.operating-system == 'ubuntu-latest'
+      if: matrix.php-version == '7.3' && matrix.operating-system == 'ubuntu-latest'
       uses: actions/upload-artifact@v1
       with:
         name: results
@@ -58,18 +58,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: ['7.2']
+        php-version: ['7.3']
 
     steps:
     - uses: actions/checkout@v1
 
     - name: Setup PHP ${{ matrix.php-version }}
-      run: |
-        sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}
-        sudo update-alternatives --set phar /usr/bin/phar${{ matrix.php-version }}
-        sudo update-alternatives --set phpdbg /usr/bin/phpdbg${{ matrix.php-version }}
-        sudo update-alternatives --set php-cgi /usr/bin/php-cgi${{ matrix.php-version }}
-        sudo update-alternatives --set phar.phar /usr/bin/phar.phar${{ matrix.php-version }}
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: ${{ matrix.php-version }}
+        coverage: none
 
     - name: Get Composer Cache Directory
       id: composer-cache
@@ -94,7 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: ['7.2']
+        php-version: ['7.3']
 
     steps:
     - uses: actions/checkout@v1
