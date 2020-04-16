@@ -5,7 +5,6 @@ namespace Monicahq\Cloudflare\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use Monicahq\Cloudflare\CloudflareProxies;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class Reload extends Command
 {
@@ -35,6 +34,6 @@ class Reload extends Command
 
         Cache::forever($this->laravel->make('config')->get('laravelcloudflare.cache'), $loader->load());
 
-        $this->info('Cloudflare\'s IP blocks have been reloaded.', OutputInterface::VERBOSITY_VERBOSE);
+        $this->info('Cloudflare\'s IP blocks have been reloaded.');
     }
 }
