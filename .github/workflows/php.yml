@@ -114,7 +114,7 @@ jobs:
       run: sed -i -e "s%$GITHUB_WORKSPACE/%%g" results/coverage.xml
 
     - name: SonarCloud Scan
-      if: "$SONAR_TOKEN" != ""
+      if: env.SONAR_TOKEN != ''
       uses: SonarSource/sonarcloud-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
