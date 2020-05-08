@@ -11,6 +11,10 @@
 
 # RELEASED VERSIONS:
 
+## 1.5.0 - 2020-05-08
+ ### New features:
+  * Merge Cloudflare ips with trusted proxies
+
 ## 1.4.0 - 2020-03-07
  ### Enhancements:
   * Support Laravel 7 and higher
