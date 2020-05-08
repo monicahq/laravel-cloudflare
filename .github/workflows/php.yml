@@ -56,7 +56,7 @@ jobs:
       run: composer install --no-interaction --no-suggest --ignore-platform-reqs
 
     - name: Run test suite
-      run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/junit/results.xml --coverage-clover ./results/coverage.xml
+      run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
 
     - name: Store results
       if: matrix.php-version == '7.3' && matrix.operating-system == 'ubuntu-latest'
