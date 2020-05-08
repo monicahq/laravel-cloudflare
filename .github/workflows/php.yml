@@ -44,10 +44,10 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
         restore-keys: |
-          ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          ${{ runner.os }}-composer-
+          ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
+          ${{ runner.os }}-composer-v2-
 
     - name: Install dependencies
       run: composer install --no-interaction --no-suggest --ignore-platform-reqs
@@ -84,10 +84,10 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
         restore-keys: |
-          ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          ${{ runner.os }}-composer-
+          ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
+          ${{ runner.os }}-composer-v2-
 
     - name: Install dependencies
       run: composer install --no-interaction --no-suggest --ignore-platform-reqs
