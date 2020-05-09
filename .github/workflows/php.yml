@@ -1,21 +1,32 @@
 name: Laravel cloudflare workflow
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+  release:
+    types:
+      - created
 
 jobs:
   tests:
     runs-on: ${{ matrix.operating-system }}
     strategy:
+      max-parallel: 15
       fail-fast: false
       matrix:
         operating-system: [ubuntu-latest]
         php-version: ['7.3', '7.4']
+    name: PHP ${{ matrix.php-version }} Test on ${{ matrix.operating-system }}
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout sources
+      uses: actions/checkout@v2
 
     - name: Setup PHP ${{ matrix.php-version }}
-      uses: shivammathur/setup-php@master
+      uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-version }}
         coverage: none
@@ -36,16 +47,16 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
         restore-keys: |
-          ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          ${{ runner.os }}-composer-
+          ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
+          ${{ runner.os }}-composer-v2-
 
     - name: Install dependencies
       run: composer install --no-interaction --no-suggest --ignore-platform-reqs
 
     - name: Run test suite
-      run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/junit/results.xml --coverage-clover ./results/coverage.xml
+      run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
 
     - name: Store results
       if: matrix.php-version == '7.3' && matrix.operating-system == 'ubuntu-latest'
@@ -61,10 +72,11 @@ jobs:
         php-version: ['7.3']
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout sources
+      uses: actions/checkout@v2
 
     - name: Setup PHP ${{ matrix.php-version }}
-      uses: shivammathur/setup-php@master
+      uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-version }}
         coverage: none
@@ -76,16 +88,53 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
         restore-keys: |
-          ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          ${{ runner.os }}-composer-
+          ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
+          ${{ runner.os }}-composer-v2-
 
     - name: Install dependencies
       run: composer install --no-interaction --no-suggest --ignore-platform-reqs
 
     - name: Run psalm
-      run: vendor/bin/psalm --show-info=false
+      run: vendor/bin/psalm
+
+
+
+  phpstan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ['7.3']
+
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v2
+
+    - name: Setup PHP ${{ matrix.php-version }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        coverage: none
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - name: Cache composer files
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
+          ${{ runner.os }}-composer-v2-
+
+    - name: Install dependencies
+      run: composer install --no-interaction --no-suggest --ignore-platform-reqs
+
+    - name : Run phpstan
+      run: vendor/bin/phpstan analyse src
+
 
   reporting:
     needs: tests
@@ -95,19 +144,24 @@ jobs:
         php-version: ['7.3']
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout sources
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
     - name: Download results
       uses: actions/download-artifact@v1
       with:
         name: results
 
-    - name: Fix coverage
-      run: sed -i -e "s%$GITHUB_WORKSPACE/%%g" results/coverage.xml
+    - name: Fix results files
+      run: |
+        sed -i -e "s%$GITHUB_WORKSPACE/%%g" results/results.xml
+        sed -i -e "s%$GITHUB_WORKSPACE/%%g" results/coverage.xml
 
     - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
+      if: env.SONAR_TOKEN != ''
+      uses: SonarSource/sonarcloud-github-action@v1.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
