@@ -11,6 +11,10 @@
 
 # RELEASED VERSIONS:
 
+## 1.6.0 - 2020-05-09
+ ### Enhancements:
+  * Remove verbosity parameter
+
 ## 1.5.0 - 2020-05-08
  ### New features:
   * Merge Cloudflare ips with trusted proxies
