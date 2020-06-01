@@ -14,8 +14,6 @@ jobs:
   tests:
     runs-on: ${{ matrix.operating-system }}
     strategy:
-      max-parallel: 15
-      fail-fast: false
       matrix:
         operating-system: [ubuntu-latest]
         php-version: ['7.3', '7.4']
@@ -53,7 +51,7 @@ jobs:
           ${{ runner.os }}-composer-v2-
 
     - name: Install dependencies
-      run: composer install --no-interaction --no-suggest --ignore-platform-reqs
+      run: composer install --no-progress --no-interaction --no-suggest --ignore-platform-reqs --prefer-dist --optimize-autoloader
 
     - name: Run test suite
       run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
@@ -64,77 +62,6 @@ jobs:
       with:
         name: results
         path: results
-
-  psalm:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php-version: ['7.3']
-
-    steps:
-    - name: Checkout sources
-      uses: actions/checkout@v2
-
-    - name: Setup PHP ${{ matrix.php-version }}
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-version }}
-        coverage: none
-
-    - name: Get Composer Cache Directory
-      id: composer-cache
-      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-    - name: Cache composer files
-      uses: actions/cache@v1
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
-        restore-keys: |
-          ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
-          ${{ runner.os }}-composer-v2-
-
-    - name: Install dependencies
-      run: composer install --no-interaction --no-suggest --ignore-platform-reqs
-
-    - name: Run psalm
-      run: vendor/bin/psalm
-
-
-
-  phpstan:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php-version: ['7.3']
-
-    steps:
-    - name: Checkout sources
-      uses: actions/checkout@v2
-
-    - name: Setup PHP ${{ matrix.php-version }}
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-version }}
-        coverage: none
-
-    - name: Get Composer Cache Directory
-      id: composer-cache
-      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-    - name: Cache composer files
-      uses: actions/cache@v1
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
-        restore-keys: |
-          ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
-          ${{ runner.os }}-composer-v2-
-
-    - name: Install dependencies
-      run: composer install --no-interaction --no-suggest --ignore-platform-reqs
-
-    - name : Run phpstan
-      run: vendor/bin/phpstan analyse src
-
 
   reporting:
     needs: tests
