@@ -26,9 +26,9 @@ Add the middleware in `app/Http/Kernel.php`, adding a new line in the `middlewar
 
 ## Existing Laravel application
 
-This middleware uses [fideloper/proxy][4] as a backend, so you can remove the other `TrustProxies` line from the `middleware` array.
+This middleware uses [fideloper/proxy](https://github.com/fideloper/TrustedProxy) as a backend, so you can remove the other `TrustProxies` line from the `middleware` array.
 
-Another option is to extend the [App\Http\Middleware\TrustProxies][3] class to `Monicahq\Cloudflare\Http\Middleware\TrustProxies`:
+Another option is to extend the [App\Http\Middleware\TrustProxies](https://github.com/laravel/laravel/blob/master/app/Http/Middleware/TrustProxies.php) class to `Monicahq\Cloudflare\Http\Middleware\TrustProxies`:
 
 ```php
 namespace App\Http\Middleware;
@@ -83,20 +83,21 @@ php artisan vendor:publish --provider="Monicahq\Cloudflare\TrustedProxyServicePr
 
 This file contains some configurations, but you may not need to change them normally.
 
-
 # Support
 
 This package supports Laravel 5.5 or newer.
 
-# License
-
-This repository licensed under the MIT license.
-
 # Citations
 
-This package was inspired by [lukasz-adamski/laravel-cloudflare][1] and forked from [ogunkarakus/laravel-cloudflare][2].
+This package was inspired by [lukasz-adamski/laravel-cloudflare](https://github.com/lukasz-adamski/laravel-cloudflare) and forked from [ogunkarakus/laravel-cloudflare](https://github.com/ogunkarakus/laravel-cloudflare).
 
-[1]: https://github.com/lukasz-adamski/laravel-cloudflare
-[2]: https://github.com/ogunkarakus/laravel-cloudflare
-[3]: https://github.com/laravel/laravel/blob/master/app/Http/Middleware/TrustProxies.php
-[4]: https://github.com/fideloper/TrustedProxy
+
+# License
+
+Author: [Alexis Saettler](https://github.com/asbiin)
+
+This project is part of [MonicaHQ](https://github.com/monicahq/).
+
+Copyright (c) 2019-2020.
+
+Licensed under the MIT License. [View license](/LICENSE).
