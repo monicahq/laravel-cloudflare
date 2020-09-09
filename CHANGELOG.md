@@ -11,6 +11,12 @@
 
 # RELEASED VERSIONS:
 
+## 1.7.0 - 2020-09-09
+ ### Enhancements:
+  * Support Laravel 8
+  * Use fideloper/proxy version ^4.4
+  * Allow guzzlehttp/guzzle version ^7.0
+
 ## 1.6.0 - 2020-05-09
  ### Enhancements:
   * Remove verbosity parameter
