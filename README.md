@@ -100,4 +100,4 @@ This project is part of [MonicaHQ](https://github.com/monicahq/).
 
 Copyright (c) 2019-2020.
 
-Licensed under the MIT License. [View license](/LICENSE).
+Licensed under the MIT License. [View license](LICENSE.md).
