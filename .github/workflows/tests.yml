@@ -63,7 +63,7 @@ jobs:
         run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
 
       - name: Store results
-        if: matrix.php-version == '7.3' && matrix.operating-system == 'ubuntu-latest' && matrix.illuminate_version == '8.x' && composer_flags == ''
+        if: matrix.php-version == '7.3' && matrix.operating-system == 'ubuntu-latest' && matrix.illuminate_version == '8.x' && matrix.composer_flags == ''
         uses: actions/upload-artifact@v2
         with:
           name: results
