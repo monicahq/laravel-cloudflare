@@ -69,38 +69,39 @@ jobs:
           name: results
           path: results
 
-    reporting:
-      needs: tests
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          php-version: [7.3]
 
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v2
-          with:
-            fetch-depth: 0
+  reporting:
+    needs: tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: [7.3]
 
-        # If this run was triggered by a pull request event, then checkout
-        # the head of the pull request instead of the merge commit.
-        - run: git checkout HEAD^2
-          if: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-        - name: Download results
-          uses: actions/download-artifact@v2
-          with:
-            name: results
-            path: results
+      # If this run was triggered by a pull request event, then checkout
+      # the head of the pull request instead of the merge commit.
+      - run: git checkout HEAD^2
+        if: ${{ github.event_name == 'pull_request' }}
 
-        - name: Fix results files
-          run: |
-            sed -i -e "s%$GITHUB_WORKSPACE/%%g" results/results.xml
-            sed -i -e "s%$GITHUB_WORKSPACE/%%g" results/coverage.xml
+      - name: Download results
+        uses: actions/download-artifact@v2
+        with:
+          name: results
+          path: results
 
-        - name: SonarCloud Scan
-          if: env.SONAR_TOKEN != ''
-          uses: SonarSource/sonarcloud-github-action@v1.4
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Fix results files
+        run: |
+          sed -i -e "s%$GITHUB_WORKSPACE/%%g" results/results.xml
+          sed -i -e "s%$GITHUB_WORKSPACE/%%g" results/coverage.xml
+
+      - name: SonarCloud Scan
+        if: env.SONAR_TOKEN != ''
+        uses: SonarSource/sonarcloud-github-action@v1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
