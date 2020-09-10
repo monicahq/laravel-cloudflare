@@ -12,64 +12,69 @@ on:
 
 jobs:
   tests:
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        operating-system: [ubuntu-latest]
         php-version: [7.3, 7.4]
-    name: PHP ${{ matrix.php-version }} Test on ${{ matrix.operating-system }}
+        illuminate_version: [5.*, 6.*, 7.*, 8.*]
+        composer_flags:  ['', '--prefer-lowest']
+    name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.illuminate_version }} | Composer Flags ${{ matrix.composer_flags }}
 
     steps:
-    - name: Checkout sources
-      uses: actions/checkout@v2
+      - name: Checkout sources
+        uses: actions/checkout@v2
 
-    - name: Setup PHP ${{ matrix.php-version }}
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-version }}
-        coverage: none
-    - name: Check PHP Version
-      run: php -v
-    - name: Check Composer Version
-      run: composer -V
-    - name: Check PHP Extensions
-      run: php -m
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+      - name: Check PHP Version
+        run: php -v
+      - name: Check Composer Version
+        run: composer -V
+      - name: Check PHP Extensions
+        run: php -m
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
+      - name: Validate composer.json
+        run: composer validate
 
-    - name: Get Composer Cache Directory
-      id: composer-cache
-      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-    - name: Cache composer files
-      uses: actions/cache@v1
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
-        restore-keys: |
-          ${{ runner.os }}-composer-v2-${{ hashFiles('**/composer.json') }}
-          ${{ runner.os }}-composer-v2-
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-v3-${{ matrix.illuminate_version }}${{ matrix.composer_flags }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-v3-${{ matrix.illuminate_version }}${{ matrix.composer_flags }}-${{ hashFiles('**/composer.json') }}
+            ${{ runner.os }}-composer-v3-${{ hashFiles('**/composer.json') }}
+            ${{ runner.os }}-composer-v3-
 
-    - name: Install dependencies
-      run: composer install --no-progress --no-interaction --no-suggest --prefer-dist --optimize-autoloader
+      - name: Install dependencies with Illuminate ${{ matrix.illuminate_version }}
+        run: |
+          export COMPOSER_ROOT_VERSION=dev-master
+          composer require "illuminate/container:${{ matrix.illuminate_version }}" "illuminate/contracts:${{ matrix.illuminate_version }}" "illuminate/database:${{ matrix.illuminate_version }}" "illuminate/http:${{ matrix.illuminate_version }}" "illuminate/support:${{ matrix.illuminate_version }}" --no-interaction --no-progress --no-suggest --prefer-stable --prefer-dist ${{ matrix.composer_flags }}
 
-    - name: Run test suite
-      run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
+      - name: Run test suite
+        run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
 
-    - name: Store results
-      if: matrix.php-version == '7.3' && matrix.operating-system == 'ubuntu-latest'
-      uses: actions/upload-artifact@v2
-      with:
-        name: results
-        path: results
+      - name: Store results
+        if: matrix.php-version == '7.4' && matrix.illuminate_version == '8.*' && matrix.composer_flags == ''
+        uses: actions/upload-artifact@v2
+        with:
+          name: results
+          path: results
+
 
   reporting:
     needs: tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [7.3]
+        php-version: [7.4]
 
     steps:
       - name: Checkout repository
