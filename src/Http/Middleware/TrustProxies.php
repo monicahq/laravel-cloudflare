@@ -17,7 +17,7 @@ class TrustProxies extends Middleware
     {
         $proxies = Cache::get($this->config->get('laravelcloudflare.cache'), []);
 
-        if (! empty($proxies)) {
+        if (is_array($proxies) && count($proxies) > 0) {
             $this->proxies = array_merge((array) $this->proxies, $proxies);
         }
 
