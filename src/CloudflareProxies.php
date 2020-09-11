@@ -37,7 +37,7 @@ class CloudflareProxies
     public function __construct(Repository $config, GuzzleClient $client = null)
     {
         $this->config = $config;
-        $this->client = $client ?: new GuzzleClient();
+        $this->client = $client ?? new GuzzleClient();
     }
 
     /**
@@ -50,11 +50,11 @@ class CloudflareProxies
     {
         $proxies = [];
 
-        if ($type & self::IP_VERSION_4) {
+        if ((bool) ($type & self::IP_VERSION_4)) {
             $proxies = $this->retrieve($this->config->get('laravelcloudflare.ipv4-path'));
         }
 
-        if ($type & self::IP_VERSION_6) {
+        if ((bool) ($type & self::IP_VERSION_6)) {
             $proxies6 = $this->retrieve($this->config->get('laravelcloudflare.ipv6-path'));
             $proxies = array_merge($proxies, $proxies6);
         }

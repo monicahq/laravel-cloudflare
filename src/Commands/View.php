@@ -30,7 +30,7 @@ class View extends Command
     {
         $proxies = Cache::get($this->laravel->make('config')->get('laravelcloudflare.cache'), []);
 
-        $rows = array_map(function ($value) {
+        $rows = array_map(function ($value): array {
             return [
                 $value,
             ];
