@@ -27,7 +27,7 @@
         "mockery/mockery": "^1.2",
         "nunomaduro/larastan": "^0.4 || ^0.5 || ^0.6",
         "ocramius/package-versions": "1.5.1",
-        "orchestra/testbench": "^3.5 || ^5.0 || ^6.0",
+        "orchestra/testbench": "^3.5 || ^5.0 || ^6.0 || ^4.0",
         "phpstan/phpstan-deprecation-rules": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-strict-rules": "^0.12",
