@@ -33,7 +33,7 @@
         "phpstan/phpstan-strict-rules": "^0.12",
         "phpunit/phpunit": "^6.0 || ^7.0 || ^8.0 || ^9.0",
         "thecodingmachine/phpstan-safe-rule": "^1.0",
-        "vimeo/psalm": "^3.9"
+        "vimeo/psalm": "^3.9 || ^4.0"
     },
     "autoload": {
         "psr-4": {
