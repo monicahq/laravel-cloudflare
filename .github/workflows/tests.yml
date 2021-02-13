@@ -3,7 +3,7 @@ name: Laravel cloudflare workflow
 on:
   push:
     branches:
-      - master
+      - main
       - next
       - next-major
       - beta
