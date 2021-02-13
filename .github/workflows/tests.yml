@@ -23,7 +23,7 @@ jobs:
         php-version: [7.3, 7.4]
         illuminate_version: [6.*, 7.*, 8.*]
         composer_flags:  ['', '--prefer-lowest']
-    name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.illuminate_version }} | Composer Flags ${{ matrix.composer_flags }}
+    name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.illuminate_version }} ${{ matrix.composer_flags }}
 
     steps:
       - name: Checkout sources
@@ -51,16 +51,18 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-v3-${{ matrix.illuminate_version }}${{ matrix.composer_flags }}-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}-${{ matrix.composer_flags }}
           restore-keys: |
-            ${{ runner.os }}-composer-v3-${{ matrix.illuminate_version }}${{ matrix.composer_flags }}-${{ hashFiles('**/composer.json') }}
-            ${{ runner.os }}-composer-v3-${{ hashFiles('**/composer.json') }}
-            ${{ runner.os }}-composer-v3-
+            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}-${{ matrix.composer_flags }}
+            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}
+            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
+            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-
+            ${{ runner.os }}-composer-v4-
 
       - name: Install dependencies with Illuminate ${{ matrix.illuminate_version }}
         run: |
           export COMPOSER_ROOT_VERSION=dev-master
-          composer require "illuminate/container:${{ matrix.illuminate_version }}" "illuminate/contracts:${{ matrix.illuminate_version }}" "illuminate/database:${{ matrix.illuminate_version }}" "illuminate/http:${{ matrix.illuminate_version }}" "illuminate/support:${{ matrix.illuminate_version }}" --no-interaction --no-progress --no-suggest --prefer-stable --prefer-dist ${{ matrix.composer_flags }}
+          composer require "illuminate/container:${{ matrix.illuminate_version }}" "illuminate/contracts:${{ matrix.illuminate_version }}" "illuminate/database:${{ matrix.illuminate_version }}" "illuminate/http:${{ matrix.illuminate_version }}" "illuminate/support:${{ matrix.illuminate_version }}" --no-interaction --no-progress --prefer-stable --prefer-dist ${{ matrix.composer_flags }}
 
       - name: Run test suite
         run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
