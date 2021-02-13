@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+      - next
+      - next-major
+      - beta
+      - alpha
   pull_request:
     types: [opened, synchronize, reopened]
   release:
