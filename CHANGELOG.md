@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/monicahq/laravel-cloudflare/compare/1.7.0...1.8.0) (2021-02-13)
+
+
+### Features
+
+* Support PHP Version to 8.0 ([#208](https://github.com/monicahq/laravel-cloudflare/issues/208)) ([3ccdec9](https://github.com/monicahq/laravel-cloudflare/commit/3ccdec99a9431de638653af4f693efef12dbe5f0))
+
 ## 1.7.0 - 2020-09-09
  ### Enhancements:
   * Support Laravel 8
@@ -53,4 +60,3 @@
 
  ### Enhancements:
   * Use guzzlehttp/guzzle to query cloudflare ips
-
