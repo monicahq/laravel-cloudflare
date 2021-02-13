@@ -60,7 +60,7 @@ jobs:
       - name: Install dependencies with Illuminate ${{ matrix.illuminate_version }}
         run: |
           export COMPOSER_ROOT_VERSION=dev-master
-          composer require "illuminate/container:${{ matrix.illuminate_version }}" "illuminate/contracts:${{ matrix.illuminate_version }}" "illuminate/database:${{ matrix.illuminate_version }}" "illuminate/http:${{ matrix.illuminate_version }}" "illuminate/support:${{ matrix.illuminate_version }}" --no-interaction --no-progress --no-suggest --prefer-stable --prefer-dist ${{ matrix.composer_flags }}
+          composer require "illuminate/container:${{ matrix.illuminate_version }}" "illuminate/contracts:${{ matrix.illuminate_version }}" "illuminate/database:${{ matrix.illuminate_version }}" "illuminate/http:${{ matrix.illuminate_version }}" "illuminate/support:${{ matrix.illuminate_version }}" --no-interaction --no-progress --prefer-stable --prefer-dist ${{ matrix.composer_flags }}
 
       - name: Run test suite
         run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
