@@ -1,0 +1,32 @@
+{
+  "tagFormat": "${version}",
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer", {
+        "preset": "angular",
+        "releaseRules": [
+          {"type": "refactor", "release": "patch"},
+          {"scope": "no-release", "release": false}
+        ]
+      }
+    ],
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    "@semantic-release/github",
+    [
+      "semantic-release-github-pullrequest",
+      {
+        "assets": ["CHANGELOG.md"],
+        "labels": [
+          "semantic-release",
+          "auto-squash"
+        ]
+      }
+    ]
+  ]
+}
