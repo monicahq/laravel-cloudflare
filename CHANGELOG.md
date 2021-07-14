@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/monicahq/laravel-cloudflare/compare/1.8.0...2.0.0) (2021-07-14)
+
+
+### Features
+
+* use laravel Http factory and remove guzzle dependency ([#220](https://github.com/monicahq/laravel-cloudflare/issues/220)) ([34eb0d7](https://github.com/monicahq/laravel-cloudflare/commit/34eb0d77ece88230c74ddaa7db025a8859c8c5d3))
+
+
+### BREAKING CHANGES
+
+* CloudflareProxies constructor has changed, this should not have an impact if you don't extend it. This version also removes Illuminate < 6.x compatibility.
+
 # [1.8.0](https://github.com/monicahq/laravel-cloudflare/compare/1.7.0...1.8.0) (2021-02-13)
 
 
