@@ -2,18 +2,18 @@
 
 namespace Monicahq\Cloudflare\Tests\Unit;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+use Illuminate\Http\Client\Factory as HttpClient;
+use Illuminate\Support\Facades\Http;
 use Monicahq\Cloudflare\CloudflareProxies;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
+use UnexpectedValueException;
 
 class CloudflareProxiesTest extends FeatureTestCase
 {
-    public function test_load_empty()
+    /** @test */
+    public function it_loads_empty_ips()
     {
-        $loader = new CloudflareProxies($this->app->make('config'));
+        $loader = $this->app->make(CloudflareProxies::class);
 
         $ips = $loader->load(0);
 
@@ -21,15 +21,26 @@ class CloudflareProxiesTest extends FeatureTestCase
         $this->assertCount(0, $ips);
     }
 
-    public function test_load_ipv4()
+    /** @test */
+    public function it_loads_real_mode()
     {
-        $mock = new MockHandler([
-            new Response(200, [], '0.0.0.0/20'),
-        ]);
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
+        $loader = $this->app->make(CloudflareProxies::class);
 
-        $loader = new CloudflareProxies($this->app->make('config'), $client);
+        $ips = $loader->load();
+
+        $this->assertNotNull($ips);
+        $this->assertTrue(count($ips) > 0);
+    }
+
+    /** @test */
+    public function it_loads_ipv4()
+    {
+        $this->app['config']->set('laravelcloudflare.url', 'https://fake');
+        $this->app[HttpClient::class] = Http::fake([
+            'https://fake/ips-v4' => Http::response('0.0.0.0/20', 200),
+        ]);
+
+        $loader = $this->app->make(CloudflareProxies::class);
 
         $ips = $loader->load(CloudflareProxies::IP_VERSION_4);
 
@@ -39,15 +50,15 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    public function test_load_ipv6()
+    /** @test */
+    public function it_loads_ipv6()
     {
-        $mock = new MockHandler([
-            new Response(200, [], '::1/32'),
+        $this->app['config']->set('laravelcloudflare.url', 'https://fake');
+        $this->app[HttpClient::class] = Http::fake([
+            'https://fake/ips-v6' => Http::response('::1/32', 200),
         ]);
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
 
-        $loader = new CloudflareProxies($this->app->make('config'), $client);
+        $loader = $this->app->make(CloudflareProxies::class);
 
         $ips = $loader->load(CloudflareProxies::IP_VERSION_6);
 
@@ -57,16 +68,16 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    public function test_load_all()
+    /** @test */
+    public function it_loads_all_ips()
     {
-        $mock = new MockHandler([
-            new Response(200, [], '0.0.0.0/20'),
-            new Response(200, [], '::1/32'),
+        $this->app['config']->set('laravelcloudflare.url', 'https://fake');
+        $this->app[HttpClient::class] = Http::fake([
+            'https://fake/ips-v4' => Http::response('0.0.0.0/20', 200),
+            'https://fake/ips-v6' => Http::response('::1/32', 200),
         ]);
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
 
-        $loader = new CloudflareProxies($this->app->make('config'), $client);
+        $loader = $this->app->make(CloudflareProxies::class);
 
         $ips = $loader->load(CloudflareProxies::IP_VERSION_ANY);
 
@@ -77,17 +88,16 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    public function test_load_default()
+    /** @test */
+    public function it_loads_all_ips_when_zero_args()
     {
-        $me = $this;
-        $mock = new MockHandler([
-            new Response(200, [], '0.0.0.0/20'),
-            new Response(200, [], '::1/32'),
+        $this->app['config']->set('laravelcloudflare.url', 'https://fake');
+        $this->app[HttpClient::class] = Http::fake([
+            'https://fake/ips-v4' => Http::response('0.0.0.0/20', 200),
+            'https://fake/ips-v6' => Http::response('::1/32', 200),
         ]);
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
 
-        $loader = new CloudflareProxies($this->app->make('config'), $client);
+        $loader = $this->app->make(CloudflareProxies::class);
 
         $ips = $loader->load();
 
@@ -99,40 +109,17 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    public function test_right_urls()
+    /** @test */
+    public function it_throw_error_if_status_ko()
     {
-        $me = $this;
-        $mock = new MockHandler([
-            function (\Psr\Http\Message\RequestInterface $request, array $options) use ($me) {
-                $me->assertEquals('https://www.cloudflare.com/ips-v4', (string) $request->getUri());
-
-                return new Response(200, [], '0.0.0.0/20');
-            },
-            function (\Psr\Http\Message\RequestInterface $request, array $options) use ($me) {
-                $me->assertEquals('https://www.cloudflare.com/ips-v6', (string) $request->getUri());
-
-                return new Response(200, [], '::1/32');
-            },
+        $this->app['config']->set('laravelcloudflare.url', 'https://fake');
+        $this->app[HttpClient::class] = Http::fake([
+            'https://fake/ips-v4' => Http::response('', 500),
         ]);
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
 
-        $loader = new CloudflareProxies($this->app->make('config'), $client);
+        $loader = $this->app->make(CloudflareProxies::class);
 
-        $loader->load();
-    }
-
-    public function test_create_guzzle()
-    {
-        $loader = new CloudflareProxies($this->app->make('config'));
-
-        $reflection = new \ReflectionClass(CloudflareProxies::class);
-        $property = $reflection->getProperty('client');
-        $property->setAccessible(true);
-
-        $client = $property->getValue($loader);
-
-        $this->assertNotNull($client);
-        $this->assertInstanceOf(Client::class, $client);
+        $this->expectException(UnexpectedValueException::class);
+        $ips = $loader->load();
     }
 }
