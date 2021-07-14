@@ -2,12 +2,9 @@
 
 namespace Monicahq\Cloudflare\Tests\Unit;
 
-use Illuminate\Support\Facades\Http;
-use Monicahq\Cloudflare\CloudflareProxies;
-use Monicahq\Cloudflare\Tests\FeatureTestCase;
 use Illuminate\Http\Client\Factory as HttpClient;
-use Illuminate\Support\Facades\Cache;
-use UnexpectedValueException;
+use Illuminate\Support\Facades\Http;
+use Monicahq\Cloudflare\Tests\FeatureTestCase;
 
 class ReloadCommandTest extends FeatureTestCase
 {

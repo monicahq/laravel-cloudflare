@@ -3,8 +3,8 @@
 namespace Monicahq\Cloudflare;
 
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use UnexpectedValueException;
 
 class CloudflareProxies
