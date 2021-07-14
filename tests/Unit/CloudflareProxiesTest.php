@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Http;
 use Monicahq\Cloudflare\CloudflareProxies;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
 use Illuminate\Http\Client\Factory as HttpClient;
+use UnexpectedValueException;
 
 class CloudflareProxiesTest extends FeatureTestCase
 {
-    public function test_load_empty()
+    /** @test */
+    public function it_loads_empty_ips()
     {
         $loader = $this->app->make(CloudflareProxies::class);
 
@@ -19,7 +21,8 @@ class CloudflareProxiesTest extends FeatureTestCase
         $this->assertCount(0, $ips);
     }
 
-    public function test_load_real()
+    /** @test */
+    public function it_loads_real_mode()
     {
         $loader = $this->app->make(CloudflareProxies::class);
 
@@ -29,7 +32,8 @@ class CloudflareProxiesTest extends FeatureTestCase
         $this->assertTrue(count($ips) > 0);
     }
 
-    public function test_load_ipv4()
+    /** @test */
+    public function it_loads_ipv4()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
         $this->app[HttpClient::class] = Http::fake([
@@ -46,7 +50,8 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    public function test_load_ipv6()
+    /** @test */
+    public function it_loads_ipv6()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
         $this->app[HttpClient::class] = Http::fake([
@@ -63,7 +68,8 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    public function test_load_all()
+    /** @test */
+    public function it_loads_all_ips()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
         $this->app[HttpClient::class] = Http::fake([
@@ -82,7 +88,8 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    public function test_load_default()
+    /** @test */
+    public function it_loads_all_ips_when_zero_args()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
         $this->app[HttpClient::class] = Http::fake([
@@ -100,5 +107,19 @@ class CloudflareProxiesTest extends FeatureTestCase
             '0.0.0.0/20',
             '::1/32',
         ], $ips);
+    }
+
+    /** @test */
+    public function it_throw_error_if_status_ko()
+    {
+        $this->app['config']->set('laravelcloudflare.url', 'https://fake');
+        $this->app[HttpClient::class] = Http::fake([
+            'https://fake/ips-v4' => Http::response('', 500),
+        ]);
+
+        $loader = $this->app->make(CloudflareProxies::class);
+
+        $this->expectException(UnexpectedValueException::class);
+        $ips = $loader->load();
     }
 }
