@@ -9,7 +9,8 @@ use Monicahq\Cloudflare\Tests\FeatureTestCase;
 
 class MiddlewareTest extends FeatureTestCase
 {
-    public function test_it_sets_trusted_proxies()
+    /** @test */
+    public function it_sets_trusted_proxies()
     {
         Cache::shouldReceive('get')
             ->with('cloudflare.proxies', [])
@@ -17,7 +18,7 @@ class MiddlewareTest extends FeatureTestCase
 
         $request = new Request();
 
-        (new TrustProxies($this->app->make('config')))->handle($request, function () {
+        $this->app->make(TrustProxies::class)->handle($request, function () {
         });
 
         $this->assertEquals(
@@ -26,7 +27,8 @@ class MiddlewareTest extends FeatureTestCase
         );
     }
 
-    public function test_it_does_not_sets_trusted_proxies()
+    /** @test */
+    public function it_does_not_sets_trusted_proxies()
     {
         Cache::shouldReceive('get')
             ->with('cloudflare.proxies', [])
@@ -34,7 +36,7 @@ class MiddlewareTest extends FeatureTestCase
 
         $request = new Request();
 
-        (new TrustProxies($this->app->make('config')))->handle($request, function () {
+        $this->app->make(TrustProxies::class)->handle($request, function () {
         });
 
         $this->assertEquals(

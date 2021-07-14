@@ -17,13 +17,13 @@
     "require": {
         "php": "^7.2 || ^8.0",
         "fideloper/proxy": "^4.4",
-        "guzzlehttp/guzzle": "^6.3 || ^7.0",
-        "illuminate/console": "^5.5 || ^6.0 || ^7.0 || ^8.0",
-        "illuminate/http": "^5.5 || ^6.0 || ^7.0 || ^8.0",
-        "illuminate/support": "^5.5 || ^6.0 || ^7.0 || ^8.0"
+        "illuminate/console": "^7.0 || ^8.0",
+        "illuminate/http": "^7.0 || ^8.0",
+        "illuminate/support": "^7.0 || ^8.0"
     },
     "require-dev": {
-        "laravel/framework": "^5.5 || ^6.0 || ^7.0 || ^8.0",
+        "guzzlehttp/guzzle": "^6.3 || ^7.0",
+        "laravel/framework": "^7.0 || ^8.0",
         "mockery/mockery": "^1.4",
         "nunomaduro/larastan": "^0",
         "ocramius/package-versions": "^1.5 || ^2.1",
@@ -51,6 +51,9 @@
                 "Monicahq\\Cloudflare\\TrustedProxyServiceProvider"
             ]
         }
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "Required to get cloudflares ip addresses (^6.5.5|^7.0.1)."
     },
     "config": {
         "sort-packages": true

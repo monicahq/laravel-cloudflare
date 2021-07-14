@@ -83,9 +83,13 @@ php artisan vendor:publish --provider="Monicahq\Cloudflare\TrustedProxyServicePr
 
 This file contains some configurations, but you may not need to change them normally.
 
-# Support
+# Compatibility
 
-This package supports Laravel 5.5 or newer.
+| Laravel | [monicahq/laravel-cloudflare](https://github.com/monicahq/laravel-cloudflare) |
+|---------|----------|
+| 5.x-6.x | <= 1.8.0 |
+| 7.x-8.x | >= 2.0.0 |
+
 
 # Citations
 
@@ -98,6 +102,6 @@ Author: [Alexis Saettler](https://github.com/asbiin)
 
 This project is part of [MonicaHQ](https://github.com/monicahq/).
 
-Copyright (c) 2019-2020.
+Copyright (c) 2019-2021.
 
 Licensed under the MIT License. [View license](LICENSE.md).

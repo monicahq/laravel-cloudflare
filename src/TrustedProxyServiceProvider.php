@@ -41,14 +41,7 @@ class TrustedProxyServiceProvider extends ServiceProvider
             __DIR__.'/../config/laravelcloudflare.php', 'laravelcloudflare'
         );
 
-        /** @var \Illuminate\Contracts\Foundation\Application */
-        $app = $this->app;
-
-        if ($app->runningInConsole()) {
-            $app->singleton(CloudflareProxies::class, function ($app): CloudflareProxies {
-                return new CloudflareProxies($app->make('config'));
-            });
-
+        if ($this->app->runningInConsole()) {
             $this->commands([
                 Commands\Reload::class,
                 Commands\View::class,

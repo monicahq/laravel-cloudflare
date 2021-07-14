@@ -17,7 +17,7 @@ class View extends Command
     /**
      * The console command description.
      *
-     * @var string|null
+     * @var string
      */
     protected $description = 'View list of trust proxies IPs stored in cache.';
 
