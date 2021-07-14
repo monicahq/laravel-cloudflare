@@ -2,9 +2,9 @@
 
 namespace Monicahq\Cloudflare;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Http\Client\Factory as HttpClient;
+use Illuminate\Support\ServiceProvider;
 
 class TrustedProxyServiceProvider extends ServiceProvider
 {

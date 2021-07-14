@@ -2,10 +2,10 @@
 
 namespace Monicahq\Cloudflare\Tests\Unit;
 
+use Illuminate\Http\Client\Factory as HttpClient;
 use Illuminate\Support\Facades\Http;
 use Monicahq\Cloudflare\CloudflareProxies;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
-use Illuminate\Http\Client\Factory as HttpClient;
 
 class CloudflareProxiesTest extends FeatureTestCase
 {
