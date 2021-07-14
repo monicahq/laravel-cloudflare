@@ -2,8 +2,9 @@
 
 namespace Monicahq\Cloudflare;
 
-use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Support\Str;
+use Illuminate\Http\Client\Factory as HttpClient;
 use UnexpectedValueException;
 
 class CloudflareProxies
@@ -17,27 +18,27 @@ class CloudflareProxies
     /**
      * The config repository instance.
      *
-     * @var \Illuminate\Contracts\Config\Repository
+     * @var Repository
      */
     protected $config;
 
     /**
-     * The GuzzleClient used to make requests.
+     * The http factory instance.
      *
-     * @var GuzzleClient
+     * @var HttpClient
      */
-    protected $client;
+    protected $http;
 
     /**
      * Create a new instance of CloudflareProxies.
      *
      * @param \Illuminate\Contracts\Config\Repository $config
-     * @param GuzzleClient  $client  Client used for http request
+     * @param \Illuminate\Http\Client\Factory $http
      */
-    public function __construct(Repository $config, GuzzleClient $client = null)
+    public function __construct(Repository $config, HttpClient $http)
     {
         $this->config = $config;
-        $this->client = $client ?? new GuzzleClient();
+        $this->http = $http;
     }
 
     /**
@@ -71,9 +72,9 @@ class CloudflareProxies
     protected function retrieve($name): array
     {
         try {
-            $url = $this->config->get('laravelcloudflare.url').'/'.$name;
+            $url = Str::of($this->config->get('laravelcloudflare.url'))->finish('/').$name;
 
-            $response = $this->client->request('GET', $url);
+            $response = $this->http->get($url);
         } catch (\Exception $e) {
             throw new UnexpectedValueException('Failed to load trust proxies from Cloudflare server.', 1, $e);
         }

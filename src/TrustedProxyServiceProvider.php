@@ -3,6 +3,8 @@
 namespace Monicahq\Cloudflare;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Http\Client\Factory as HttpClient;
 
 class TrustedProxyServiceProvider extends ServiceProvider
 {
@@ -46,7 +48,7 @@ class TrustedProxyServiceProvider extends ServiceProvider
 
         if ($app->runningInConsole()) {
             $app->singleton(CloudflareProxies::class, function ($app): CloudflareProxies {
-                return new CloudflareProxies($app->make('config'));
+                return new CloudflareProxies($app->make(Repository::class), $app->make(HttpClient::class));
             });
 
             $this->commands([
