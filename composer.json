@@ -52,6 +52,9 @@
             ]
         }
     },
+    "suggest": {
+        "guzzlehttp/guzzle": "Required to get cloudflares ip addresses (^6.5.5|^7.0.1)."
+    },
     "config": {
         "sort-packages": true
     },
