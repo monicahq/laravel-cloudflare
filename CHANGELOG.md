@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/monicahq/laravel-cloudflare/compare/1.8.0...1.9.0) (2021-07-14)
+
+
+### Features
+
+* use laravel Http factory and remove guzzle dependency ([#220](https://github.com/monicahq/laravel-cloudflare/issues/220)) ([cc3a044](https://github.com/monicahq/laravel-cloudflare/commit/cc3a044e38916fbd790c067779a475ec978cc9e9))
+
 # [1.8.0](https://github.com/monicahq/laravel-cloudflare/compare/1.7.0...1.8.0) (2021-02-13)
 
 
