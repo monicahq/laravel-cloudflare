@@ -16,7 +16,6 @@
     ],
     "require": {
         "php": "^7.2 || ^8.0",
-        "fideloper/proxy": "^4.4",
         "illuminate/console": "^7.0 || ^8.0",
         "illuminate/http": "^7.0 || ^8.0",
         "illuminate/support": "^7.0 || ^8.0"
