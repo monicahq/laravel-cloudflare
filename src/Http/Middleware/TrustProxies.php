@@ -24,4 +24,3 @@ class TrustProxies extends Middleware
         parent::setTrustedProxyIpAddresses($request);
     }
 }
-
