@@ -13,6 +13,8 @@ on:
   release:
     types:
       - created
+env:
+  php-version: '8.1'
 
 jobs:
   tests:
@@ -20,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [7.3, 7.4, 8.0]
+        php-version: [7.4, 8.0, 8.1]
         illuminate_version: [7.*, 8.*]
         composer_flags:  ['', '--prefer-lowest']
     name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.illuminate_version }} ${{ matrix.composer_flags }}
@@ -72,7 +74,7 @@ jobs:
         working-directory: results
 
       - name: Store results
-        if: matrix.php-version == '8.0' && matrix.illuminate_version == '8.*' && matrix.composer_flags == ''
+        if: matrix.php-version == env.php-version && matrix.illuminate_version == '8.*' && matrix.composer_flags == ''
         uses: actions/upload-artifact@v2
         with:
           name: results
@@ -87,7 +89,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [8.0]
+        php-version: [8.1]
 
     steps:
       - name: Checkout repository
