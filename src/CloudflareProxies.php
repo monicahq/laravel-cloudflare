@@ -32,8 +32,8 @@ class CloudflareProxies
     /**
      * Create a new instance of CloudflareProxies.
      *
-     * @param \Illuminate\Contracts\Config\Repository $config
-     * @param \Illuminate\Http\Client\Factory $http
+     * @param  \Illuminate\Contracts\Config\Repository  $config
+     * @param  \Illuminate\Http\Client\Factory  $http
      */
     public function __construct(Repository $config, HttpClient $http)
     {
@@ -66,7 +66,7 @@ class CloudflareProxies
     /**
      * Retrieve requested proxy list by name.
      *
-     * @param  string  $name requet name
+     * @param  string  $name  requet name
      * @return array
      */
     protected function retrieve($name): array
