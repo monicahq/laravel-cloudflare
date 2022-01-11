@@ -1,4 +1,4 @@
-name: Laravel cloudflare workflow
+name: Unit tests
 
 on:
   push:
