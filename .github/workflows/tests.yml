@@ -14,16 +14,24 @@ on:
     types:
       - created
 
+env:
+  default-php-version: '8.1'
+  default-laravel-version: '8.*'
+  semantic-node-version: 16
+
+
 jobs:
   tests:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        php-version: [7.3, 7.4, 8.0]
-        illuminate_version: [7.*, 8.*]
-        composer_flags:  ['', '--prefer-lowest']
-    name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.illuminate_version }} ${{ matrix.composer_flags }}
+        php-version: ['7.4', '8.0', '8.1']
+        laravel_version: [8.*, 9.*]
+        exclude:
+          - php-version: 7.4
+            laravel_version: 9.*
+    name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.laravel_version }}
 
     steps:
       - name: Checkout sources
@@ -51,18 +59,17 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}-${{ matrix.composer_flags }}
+          key: ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}
           restore-keys: |
-            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}-${{ matrix.composer_flags }}
             ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}
             ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
             ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-
             ${{ runner.os }}-composer-v4-
 
-      - name: Install dependencies with Illuminate ${{ matrix.illuminate_version }}
+      - name: Install dependencies with Illuminate ${{ matrix.laravel_version }}
         run: |
           export COMPOSER_ROOT_VERSION=dev-master
-          composer require "illuminate/container:${{ matrix.illuminate_version }}" "illuminate/contracts:${{ matrix.illuminate_version }}" "illuminate/database:${{ matrix.illuminate_version }}" "illuminate/http:${{ matrix.illuminate_version }}" "illuminate/support:${{ matrix.illuminate_version }}" --no-interaction --no-progress --prefer-stable --prefer-dist ${{ matrix.composer_flags }}
+          composer require "illuminate/console:${{ matrix.laravel_version }}" "illuminate/http:${{ matrix.laravel_version }}" "illuminate/support:${{ matrix.laravel_version }}" --no-interaction --no-progress --prefer-stable --prefer-dist
 
       - name: Run test suite
         run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
@@ -72,7 +79,7 @@ jobs:
         working-directory: results
 
       - name: Store results
-        if: matrix.php-version == '8.0' && matrix.illuminate_version == '8.*' && matrix.composer_flags == ''
+        if: matrix.php-version == env.default-php-version && matrix.laravel_version == env.default-laravel-version
         uses: actions/upload-artifact@v2
         with:
           name: results
@@ -85,9 +92,6 @@ jobs:
   reporting:
     needs: tests
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php-version: [8.0]
 
     steps:
       - name: Checkout repository
@@ -124,6 +128,11 @@ jobs:
         with:
           fetch-depth: 0 # Get all tags
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.semantic-node-version }}
+
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2
         id: semantic
@@ -131,9 +140,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
         with:
-          semantic_version: 17.3.7
+          semantic_version: 18
           extra_plugins: |
-            @semantic-release/changelog
+            @semantic-release/changelog@6
             semantic-release-github-pullrequest
 
       - name: New release published

@@ -26,7 +26,7 @@ Add the middleware in `app/Http/Kernel.php`, adding a new line in the `middlewar
 
 ## Existing Laravel application
 
-This middleware uses [fideloper/proxy](https://github.com/fideloper/TrustedProxy) as a backend, so you can remove the other `TrustProxies` line from the `middleware` array.
+This middleware uses [Illuminate\Http\Middleware\TrustProxies](https://github.com/laravel/framework/blob/8.x/src/Illuminate/Http/Middleware/TrustProxies.php) as a backend, so you can remove your `TrustProxies` middleware.
 
 Another option is to extend the [App\Http\Middleware\TrustProxies](https://github.com/laravel/laravel/blob/master/app/Http/Middleware/TrustProxies.php) class to `Monicahq\Cloudflare\Http\Middleware\TrustProxies`:
 
@@ -85,10 +85,11 @@ This file contains some configurations, but you may not need to change them norm
 
 # Compatibility
 
-| Laravel | [monicahq/laravel-cloudflare](https://github.com/monicahq/laravel-cloudflare) |
-|---------|----------|
-| 5.x-6.x | <= 1.8.0 |
-| 7.x-8.x | >= 2.0.0 |
+| Laravel  | [monicahq/laravel-cloudflare](https://github.com/monicahq/laravel-cloudflare) |
+|----------|----------|
+| 5.x-6.x  | <= 1.8.0 |
+| 7.x-8.53 |  2.0.0   |
+| 8.54-9.x | >= 3.0.0 |
 
 
 # Citations

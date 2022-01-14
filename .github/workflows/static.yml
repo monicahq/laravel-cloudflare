@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [8.0]
+        php-version: [8.1]
 
     steps:
       - name: Checkout sources
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [8.0]
+        php-version: [8.1]
 
     steps:
       - name: Checkout sources

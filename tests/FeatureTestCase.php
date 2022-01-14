@@ -10,7 +10,7 @@ class FeatureTestCase extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('trustedproxy.headers', Request::HEADER_X_FORWARDED_ALL);
+        $app['config']->set('trustedproxy.headers', Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO);
     }
 
     protected function getPackageProviders($app)
