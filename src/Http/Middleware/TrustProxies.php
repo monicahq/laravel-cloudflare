@@ -2,9 +2,10 @@
 
 namespace Monicahq\Cloudflare\Http\Middleware;
 
-use Fideloper\Proxy\TrustProxies as Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Http\Middleware\TrustProxies as Middleware;
 
 class TrustProxies extends Middleware
 {
@@ -15,7 +16,7 @@ class TrustProxies extends Middleware
      */
     protected function setTrustedProxyIpAddresses(Request $request)
     {
-        $proxies = Cache::get($this->config->get('laravelcloudflare.cache'), []);
+        $proxies = Cache::get(Config::get('laravelcloudflare.cache'), []);
 
         if (is_array($proxies) && count($proxies) > 0) {
             $this->proxies = array_merge((array) $this->proxies, $proxies);

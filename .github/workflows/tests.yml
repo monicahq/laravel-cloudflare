@@ -71,7 +71,7 @@ jobs:
       - name: Install dependencies with Illuminate ${{ matrix.laravel_version }}
         run: |
           export COMPOSER_ROOT_VERSION=dev-master
-          composer require "illuminate/container:${{ matrix.laravel_version }}" "illuminate/contracts:${{ matrix.laravel_version }}" "illuminate/database:${{ matrix.laravel_version }}" "illuminate/http:${{ matrix.laravel_version }}" "illuminate/support:${{ matrix.laravel_version }}" --no-interaction --no-progress --prefer-stable --prefer-dist
+          composer require "illuminate/container:${{ matrix.laravel_version }}" "illuminate/console:${{ matrix.laravel_version }}" "illuminate/http:${{ matrix.laravel_version }}" "illuminate/support:${{ matrix.laravel_version }}" --no-interaction --no-progress --prefer-stable --prefer-dist
 
       - name: Run test suite
         run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
