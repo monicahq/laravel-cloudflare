@@ -27,13 +27,13 @@ jobs:
       fail-fast: false
       matrix:
         php-version: [7.4, 8.0, 8.1]
-        illuminate_version: [7.*, 8.*, 9.*]
+        laravel_version: [7.*, 8.*, 9.*]
         exclude:
           - php-version: 7.4
             laravel_version: 9.*
           - php-version: 8.1
             laravel_version: 7.*
-    name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.illuminate_version }}
+    name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.laravel_version }}
 
     steps:
       - name: Checkout sources
@@ -68,10 +68,10 @@ jobs:
             ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-
             ${{ runner.os }}-composer-v4-
 
-      - name: Install dependencies with Illuminate ${{ matrix.illuminate_version }}
+      - name: Install dependencies with Illuminate ${{ matrix.laravel_version }}
         run: |
           export COMPOSER_ROOT_VERSION=dev-master
-          composer require "illuminate/container:${{ matrix.illuminate_version }}" "illuminate/contracts:${{ matrix.illuminate_version }}" "illuminate/database:${{ matrix.illuminate_version }}" "illuminate/http:${{ matrix.illuminate_version }}" "illuminate/support:${{ matrix.illuminate_version }}" --no-interaction --no-progress --prefer-stable --prefer-dist
+          composer require "illuminate/container:${{ matrix.laravel_version }}" "illuminate/contracts:${{ matrix.laravel_version }}" "illuminate/database:${{ matrix.laravel_version }}" "illuminate/http:${{ matrix.laravel_version }}" "illuminate/support:${{ matrix.laravel_version }}" --no-interaction --no-progress --prefer-stable --prefer-dist
 
       - name: Run test suite
         run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
@@ -81,7 +81,7 @@ jobs:
         working-directory: results
 
       - name: Store results
-        if: matrix.php-version == env.default-php-version && matrix.illuminate_version == env.default-laravel-version
+        if: matrix.php-version == env.default-php-version && matrix.laravel_version == env.default-laravel-version
         uses: actions/upload-artifact@v2
         with:
           name: results
