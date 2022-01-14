@@ -26,7 +26,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [7.4, 8.0, 8.1]
+        php-version: ['7.4', '8.0', '8.1']
         laravel_version: [7.*, 8.*, 9.*]
         exclude:
           - php-version: 7.4
