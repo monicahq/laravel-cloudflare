@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/monicahq/laravel-cloudflare/compare/2.0.0...3.0.0) (2022-01-14)
+
+
+### Features
+
+* prepare to Laravel 9 and remove Fideloper\Proxy dependency ([#229](https://github.com/monicahq/laravel-cloudflare/issues/229)) ([fd43401](https://github.com/monicahq/laravel-cloudflare/commit/fd434012b83876a00ac1ad92d48560e59a9060e4))
+
+
+### BREAKING CHANGES
+
+* TrustProxy class has changed extend class
+
 # [2.0.0](https://github.com/monicahq/laravel-cloudflare/compare/1.8.0...2.0.0) (2021-07-14)
 
 
