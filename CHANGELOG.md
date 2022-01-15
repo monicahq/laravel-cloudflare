@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/monicahq/laravel-cloudflare/compare/3.0.0...3.1.0) (2022-01-15)
+
+
+### Features
+
+* first time load blocks when not loaded ([#232](https://github.com/monicahq/laravel-cloudflare/issues/232)) ([e63ba67](https://github.com/monicahq/laravel-cloudflare/commit/e63ba6764806e5532144ac98c0b50b57ccdb0120))
+
 # [3.0.0](https://github.com/monicahq/laravel-cloudflare/compare/2.0.0...3.0.0) (2022-01-14)
 
 
