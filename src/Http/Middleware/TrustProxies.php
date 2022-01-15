@@ -18,7 +18,9 @@ class TrustProxies extends Middleware
     protected function setTrustedProxyIpAddresses(Request $request)
     {
         $cachedProxies = Cache::get(Config::get('laravelcloudflare.cache'), function () {
-            return app(CloudflareProxies::class)->load();
+            /** @var CloudflareProxies $cloudflareProxies */
+            $cloudflareProxies = app(CloudflareProxies::class);
+            return $cloudflareProxies->load();
         });
 
         if (is_array($cachedProxies) && count($cachedProxies) > 0) {
