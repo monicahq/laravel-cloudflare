@@ -5,9 +5,9 @@ namespace Monicahq\Cloudflare\Tests\Unit\Http\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Mockery\MockInterface;
+use Monicahq\Cloudflare\CloudflareProxies;
 use Monicahq\Cloudflare\Http\Middleware\TrustProxies;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
-use Monicahq\Cloudflare\CloudflareProxies;
 
 class TrustProxiesTest extends FeatureTestCase
 {

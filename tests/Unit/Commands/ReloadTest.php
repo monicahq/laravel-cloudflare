@@ -5,8 +5,8 @@ namespace Monicahq\Cloudflare\Tests\Unit\Commands;
 use Illuminate\Http\Client\Factory as HttpClient;
 use Illuminate\Support\Facades\Http;
 use Mockery\MockInterface;
-use Monicahq\Cloudflare\Tests\FeatureTestCase;
 use Monicahq\Cloudflare\CloudflareProxies;
+use Monicahq\Cloudflare\Tests\FeatureTestCase;
 
 class ReloadTest extends FeatureTestCase
 {
