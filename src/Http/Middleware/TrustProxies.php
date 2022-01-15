@@ -20,6 +20,7 @@ class TrustProxies extends Middleware
         $cachedProxies = Cache::get(Config::get('laravelcloudflare.cache'), function () {
             /** @var CloudflareProxies $cloudflareProxies */
             $cloudflareProxies = app(CloudflareProxies::class);
+
             return $cloudflareProxies->load();
         });
 
