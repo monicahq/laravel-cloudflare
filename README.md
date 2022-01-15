@@ -22,16 +22,15 @@ You don't need to add this package to your service providers.
 2. Configure Middleware
 - _Option 1_: **Add Cloudflare TrustProxies middleware and remove default one**
 
-Add the middleware in `app/Http/Kernel.php`, adding a new line in the `middleware` array:
+Replace `TrustProxies` middleware in `app/Http/Kernel.php`, by modifying the `middleware` array:
 
 ```diff
-- \App\Http\Middleware\TrustProxies::class,
-+ \Monicahq\Cloudflare\Http\Middleware\TrustProxies::class
+  protected $middleware = [
+-     \App\Http\Middleware\TrustProxies::class,
++     \Monicahq\Cloudflare\Http\Middleware\TrustProxies::class
+  ...
+
 ```
-
-This middleware uses [Illuminate\Http\Middleware\TrustProxies](https://github.com/laravel/framework/blob/8.x/src/Illuminate/Http/Middleware/TrustProxies.php) as a backend, so you can remove your `\App\Http\Middleware\TrustProxies::class` middleware from `app/Http/Kernel.php`.
-
-
 
 - _Option 2_: **Extend current middleware to use Cloudflare TrustProxies middleware**
 
@@ -49,9 +48,21 @@ Another option is to extend the `App\Http\Middleware\TrustProxies` class to `Mon
       ...
 ```
 
+3. Load list of Cloudflare IP blocks
+
+Run the `cloudflare:reload` artisan command to load the Cloudflare IP blocks:
+
+```sh
+php artisan cloudflare:reload
+```
+
+
 # How it works
 
+The middleware uses [Illuminate\Http\Middleware\TrustProxies](https://github.com/laravel/framework/blob/8.x/src/Illuminate/Http/Middleware/TrustProxies.php) as a backend.
+
 When the cloudflare ips are detected, they are used as trusted proxies.
+
 
 # Refreshing the Cache
 
@@ -60,7 +71,7 @@ When request comes, the middleware will get Cloudflare's IP blocks from cache, a
 
 You'll need to refresh the cloudflare cache regularely to always have up to date proxy.
 
-You can use the `cloudflare:reload` artisan command to refresh the IP blocks:
+Use the `cloudflare:reload` artisan command to refresh the IP blocks:
 
 ```sh
 php artisan cloudflare:reload
