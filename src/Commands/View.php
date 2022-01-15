@@ -3,7 +3,8 @@
 namespace Monicahq\Cloudflare\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Contracts\Cache\Factory;
+use Illuminate\Contracts\Config\Repository;
 
 class View extends Command
 {
@@ -24,11 +25,13 @@ class View extends Command
     /**
      * Execute the console command.
      *
+     * @param  Factory  $cache
+     * @param  Repository  $config
      * @return void
      */
-    public function handle()
+    public function handle(Factory $cache, Repository $config)
     {
-        $proxies = Cache::get($this->laravel->make('config')->get('laravelcloudflare.cache'), []);
+        $proxies = $cache->store()->get($config->get('laravelcloudflare.cache'), []);
 
         $rows = array_map(function ($value): array {
             return [

@@ -48,14 +48,6 @@ Another option is to extend the `App\Http\Middleware\TrustProxies` class to `Mon
       ...
 ```
 
-3. Load list of Cloudflare IP blocks
-
-Run the `cloudflare:reload` artisan command to load the Cloudflare IP blocks:
-
-```sh
-php artisan cloudflare:reload
-```
-
 
 # How it works
 

@@ -74,13 +74,9 @@ class CloudflareProxies
         try {
             $url = Str::of($this->config->get('laravelcloudflare.url'))->finish('/').$name;
 
-            $response = $this->http->get($url);
+            $response = $this->http->get($url)->throw();
         } catch (\Exception $e) {
             throw new UnexpectedValueException('Failed to load trust proxies from Cloudflare server.', 1, $e);
-        }
-
-        if ($response->status() != 200) {
-            throw new UnexpectedValueException('Failed to load trust proxies from Cloudflare server.');
         }
 
         return array_filter(explode("\n", $response->body()));
