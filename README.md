@@ -11,47 +11,56 @@ Add Cloudflare ip addresses to trusted proxies for Laravel.
 
 # Installation
 
-Install using composer:
+1. Install pacakge using composer:
 ```
 composer require monicahq/laravel-cloudflare
 ```
 
 You don't need to add this package to your service providers.
 
+
+2. Configure Middleware
+- _Option 1_: **Add Cloudflare TrustProxies middleware and remove default one**
+
 Add the middleware in `app/Http/Kernel.php`, adding a new line in the `middleware` array:
 
-```php
-\Monicahq\Cloudflare\Http\Middleware\TrustProxies::class
+```diff
+- \App\Http\Middleware\TrustProxies::class,
++ \Monicahq\Cloudflare\Http\Middleware\TrustProxies::class
 ```
 
-## Existing Laravel application
+This middleware uses [Illuminate\Http\Middleware\TrustProxies](https://github.com/laravel/framework/blob/8.x/src/Illuminate/Http/Middleware/TrustProxies.php) as a backend, so you can remove your `\App\Http\Middleware\TrustProxies::class` middleware from `app/Http/Kernel.php`.
 
-This middleware uses [Illuminate\Http\Middleware\TrustProxies](https://github.com/laravel/framework/blob/8.x/src/Illuminate/Http/Middleware/TrustProxies.php) as a backend, so you can remove your `TrustProxies` middleware.
 
-Another option is to extend the [App\Http\Middleware\TrustProxies](https://github.com/laravel/laravel/blob/master/app/Http/Middleware/TrustProxies.php) class to `Monicahq\Cloudflare\Http\Middleware\TrustProxies`:
 
-```php
-namespace App\Http\Middleware;
+- _Option 2_: **Extend current middleware to use Cloudflare TrustProxies middleware**
 
-use Illuminate\Http\Request;
-use Monicahq\Cloudflare\Http\Middleware\TrustProxies as Middleware;
+Another option is to extend the `App\Http\Middleware\TrustProxies` class to `Monicahq\Cloudflare\Http\Middleware\TrustProxies`:
 
-class TrustProxies extends Middleware
-{
-    ...
+```diff
+  namespace App\Http\Middleware;
+
+  use Illuminate\Http\Request;
+- use Illuminate\Http\Middleware\TrustProxies as Middleware;
++ use Monicahq\Cloudflare\Http\Middleware\TrustProxies as Middleware;
+
+  class TrustProxies extends Middleware
+  {
+      ...
 ```
 
-If the cloudflare ips are detected, they will be used, and if not the trustproxies one will be.
+# How it works
 
+When the cloudflare ips are detected, they are used as trusted proxies.
 
 # Refreshing the Cache
 
-This package basically retrieves Cloudflare's IP blocks, and stores them in cache.
-When request comes, the middleware will get Cloudflare's IP blocks from cache, and load them to trusted proxies.
+This package retrieves Cloudflare's IP blocks, and stores them in cache.
+When request comes, the middleware will get Cloudflare's IP blocks from cache, and load them as trusted proxies.
 
-Thus, you'll need to refresh the cloudflare cache every day
+You'll need to refresh the cloudflare cache regularely to always have up to date proxy.
 
-You can use the following command for this:
+You can use the `cloudflare:reload` artisan command to refresh the IP blocks:
 
 ```sh
 php artisan cloudflare:reload
@@ -67,7 +76,7 @@ $schedule->command('cloudflare:reload')->daily();
 
 # View current Cloudflare's IP blocks
 
-You can use the following command to see the cached IP blocks.
+You can use the `cloudflare:view` artisan command to see the cached IP blocks:
 
 ```sh
 php artisan cloudflare:view
