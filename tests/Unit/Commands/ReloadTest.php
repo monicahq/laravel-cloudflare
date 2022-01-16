@@ -4,8 +4,7 @@ namespace Monicahq\Cloudflare\Tests\Unit\Commands;
 
 use Illuminate\Http\Client\Factory as HttpClient;
 use Illuminate\Support\Facades\Http;
-use Mockery\MockInterface;
-use Monicahq\Cloudflare\CloudflareProxies;
+use Monicahq\Cloudflare\Facades\CloudflareProxies;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
 
 class ReloadTest extends FeatureTestCase
@@ -13,10 +12,9 @@ class ReloadTest extends FeatureTestCase
     /** @test */
     public function it_loads_proxies()
     {
-        $this->mock(CloudflareProxies::class, function (MockInterface $mock) {
-            $mock->shouldReceive('load')
-                ->andReturn(['expect']);
-        });
+        CloudflareProxies::shouldReceive('load')
+            ->once()
+            ->andReturn(['expect']);
 
         $this->artisan('cloudflare:reload')
             ->expectsOutput('Cloudflare\'s IP blocks have been reloaded.')

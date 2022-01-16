@@ -4,8 +4,7 @@ namespace Monicahq\Cloudflare\Tests\Unit\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Mockery\MockInterface;
-use Monicahq\Cloudflare\CloudflareProxies;
+use Monicahq\Cloudflare\Facades\CloudflareProxies;
 use Monicahq\Cloudflare\Http\Middleware\TrustProxies;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
 
@@ -48,10 +47,9 @@ class TrustProxiesTest extends FeatureTestCase
     /** @test */
     public function it_load_trustproxies()
     {
-        $this->mock(CloudflareProxies::class, function (MockInterface $mock) {
-            $mock->shouldReceive('load')
-                ->andReturn(['expect']);
-        });
+        CloudflareProxies::shouldReceive('load')
+            ->once()
+            ->andReturn(['expect']);
 
         $request = new Request();
 

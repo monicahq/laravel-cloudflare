@@ -5,7 +5,7 @@ namespace Monicahq\Cloudflare\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Cache\Factory;
 use Illuminate\Contracts\Config\Repository;
-use Monicahq\Cloudflare\CloudflareProxies;
+use Monicahq\Cloudflare\LaravelCloudflare;
 
 class Reload extends Command
 {
@@ -32,10 +32,9 @@ class Reload extends Command
      */
     public function handle(Factory $cache, Repository $config)
     {
-        /** @var CloudflareProxies */
-        $loader = $this->laravel->make(CloudflareProxies::class);
+        $proxies = LaravelCloudflare::getProxies();
 
-        $cache->store()->forever($config->get('laravelcloudflare.cache'), $loader->load());
+        $cache->store()->forever($config->get('laravelcloudflare.cache'), $proxies);
 
         $this->info('Cloudflare\'s IP blocks have been reloaded.');
     }

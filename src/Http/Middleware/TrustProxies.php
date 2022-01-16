@@ -6,7 +6,7 @@ use Illuminate\Http\Middleware\TrustProxies as Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
-use Monicahq\Cloudflare\CloudflareProxies;
+use Monicahq\Cloudflare\LaravelCloudflare;
 
 class TrustProxies extends Middleware
 {
@@ -18,10 +18,7 @@ class TrustProxies extends Middleware
     protected function setTrustedProxyIpAddresses(Request $request)
     {
         $cachedProxies = Cache::get(Config::get('laravelcloudflare.cache'), function () {
-            /** @var CloudflareProxies $cloudflareProxies */
-            $cloudflareProxies = app(CloudflareProxies::class);
-
-            return $cloudflareProxies->load();
+            return LaravelCloudflare::getProxies();
         });
 
         if (is_array($cachedProxies) && count($cachedProxies) > 0) {
