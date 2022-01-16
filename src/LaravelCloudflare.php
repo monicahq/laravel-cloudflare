@@ -20,7 +20,7 @@ final class LaravelCloudflare
      */
     public static function getProxies(): array
     {
-        if (static::$getProxiesCallback) {
+        if (static::$getProxiesCallback !== null) {
             return call_user_func(static::$getProxiesCallback);
         }
 
