@@ -16,8 +16,9 @@ class LaravelCloudflareTest extends FeatureTestCase
     {
         static::$run = false;
 
-        LaravelCloudflare::getProxiesUsing(function() {
+        LaravelCloudflare::getProxiesUsing(function () {
             static::$run = true;
+
             return ['expect'];
         });
 
