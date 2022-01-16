@@ -59,5 +59,6 @@ class TrustProxiesTest extends FeatureTestCase
         $proxies = $request->getTrustedProxies();
 
         $this->assertEquals(['expect'], $proxies);
+        $this->assertEquals(['expect'], $this->app['cache']->get('cloudflare.proxies'));
     }
 }
