@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/monicahq/laravel-cloudflare/compare/3.2.0...3.2.1) (2022-01-16)
+
+
+### Bug Fixes
+
+* store values after a missed hit ([#236](https://github.com/monicahq/laravel-cloudflare/issues/236)) ([8b8db66](https://github.com/monicahq/laravel-cloudflare/commit/8b8db6665ee30a6e655952c325d3df03c7fa9a46))
+
 # [3.2.0](https://github.com/monicahq/laravel-cloudflare/compare/3.1.0...3.2.0) (2022-01-16)
 
 
