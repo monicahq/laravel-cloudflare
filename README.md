@@ -48,6 +48,28 @@ Another option is to extend the `App\Http\Middleware\TrustProxies` class to `Mon
       ...
 ```
 
+## Custom proxies callback
+
+You can define your own proxies callback by calling the `LaravelCloudflare::getProxiesUsing()` to change the behavior of the `LaravelCloudflare::getProxies()` method.
+This method should typically be called in the `boot` method of your `AppServiceProvider` class:
+
+```php
+use Monicahq\Cloudflare\LaravelCloudflare;
+use Monicahq\Cloudflare\Facades\CloudflareProxies;
+
+/**
+ * Bootstrap any application services.
+ *
+ * @return void
+ */
+public function boot()
+{
+    LaravelCloudflare::getProxiesUsing(function() {
+        return CloudflareProxies::load();
+    });
+}
+```
+
 
 # How it works
 
