@@ -11,7 +11,7 @@ Add Cloudflare ip addresses to trusted proxies for Laravel.
 
 # Installation
 
-1. Install pacakge using composer:
+1. Install package using composer:
 ```
 composer require monicahq/laravel-cloudflare
 ```
