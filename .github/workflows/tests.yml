@@ -66,10 +66,11 @@ jobs:
             ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-
             ${{ runner.os }}-composer-v4-
 
-      - name: Install dependencies with Illuminate ${{ matrix.laravel_version }}
+      - name: Install dependencies with Laravel ${{ matrix.laravel_version }}
         run: |
-          export COMPOSER_ROOT_VERSION=dev-master
-          composer require "illuminate/console:${{ matrix.laravel_version }}" "illuminate/http:${{ matrix.laravel_version }}" "illuminate/support:${{ matrix.laravel_version }}" --no-interaction --no-progress --prefer-stable --prefer-dist
+          export COMPOSER_ROOT_VERSION=dev-main
+          composer require "illuminate/support:${{ matrix.laravel_version }}" --no-update
+          composer update --no-interaction --no-progress --prefer-dist
 
       - name: Run test suite
         run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml

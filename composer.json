@@ -16,13 +16,10 @@
     ],
     "require": {
         "php": "^7.4 || ^8.0",
-        "illuminate/console": "^8.0 || ^9.0",
-        "illuminate/http": "^8.0 || ^9.0",
         "illuminate/support": "^8.0 || ^9.0"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3 || ^7.0",
-        "laravel/framework": "^8.0 || ^9.0",
         "mockery/mockery": "^1.4",
         "nunomaduro/larastan": "^1.0",
         "ocramius/package-versions": "^1.5 || ^2.1",
