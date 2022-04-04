@@ -130,7 +130,7 @@ jobs:
           fetch-depth: 0 # Get all tags
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.1.0
         with:
           node-version: ${{ env.semantic-node-version }}
 
