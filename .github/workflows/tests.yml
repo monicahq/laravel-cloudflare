@@ -101,7 +101,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download results
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: results
           path: results
