@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <psalm
-    totallyTyped="false"
+    useDocblockTypes="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
-    xsi:schemaLocation="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
         <directory name="src" />
@@ -42,5 +42,12 @@
         <UnresolvableInclude errorLevel="info" />
 
         <RawObjectIteration errorLevel="info" />
+
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <file name="src/Http/Middleware/TrustProxies.php" />
+            </errorLevel>
+        </UndefinedClass>
+
     </issueHandlers>
 </psalm>
