@@ -42,5 +42,12 @@
         <UnresolvableInclude errorLevel="info" />
 
         <RawObjectIteration errorLevel="info" />
+
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <file name="src/Http/Middleware/TrustProxies.php" />
+            </errorLevel>
+        </UndefinedClass>
+
     </issueHandlers>
 </psalm>
