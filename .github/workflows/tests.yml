@@ -59,12 +59,12 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}
+          key: ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}
           restore-keys: |
-            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}
-            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
-            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-
-            ${{ runner.os }}-composer-v4-
+            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}
+            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
+            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-
+            ${{ runner.os }}-composer-v5-
 
       - name: Install dependencies with Laravel ${{ matrix.laravel_version }}
         run: |

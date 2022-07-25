@@ -27,11 +27,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
+          key: ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
           restore-keys: |
-            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
-            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-
-            ${{ runner.os }}-composer-v4-
+            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
+            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-
+            ${{ runner.os }}-composer-v5-
 
       - name: Install dependencies
         run: composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader
@@ -62,11 +62,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
+          key: ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
           restore-keys: |
-            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
-            ${{ runner.os }}-composer-v4-${{ hashFiles('**/composer.json') }}-
-            ${{ runner.os }}-composer-v4-
+            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
+            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-
+            ${{ runner.os }}-composer-v5-
 
       - name: Install dependencies
         run: composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader
