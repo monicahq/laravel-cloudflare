@@ -18,7 +18,7 @@ class TrustProxies extends Middleware
      */
     protected function setTrustedProxyIpAddresses(Request $request)
     {
-        if(Config::get('laravelcloudflare.enabled')) {
+        if (Config::get('laravelcloudflare.enabled')) {
             $this->setTrustedProxyCloudflare($request);
         }
 
