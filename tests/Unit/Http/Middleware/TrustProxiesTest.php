@@ -63,4 +63,19 @@ class TrustProxiesTest extends FeatureTestCase
 
         $this->assertEquals([], $proxies);
     }
+
+    /** @test */
+    public function it_deactivates_middleware()
+    {
+        config(['laravelcloudflare.enabled' => false]);
+
+        $request = new Request();
+
+        $this->app->make(TrustProxies::class)->handle($request, fn () => null);
+
+        $proxies = $request->getTrustedProxies();
+
+        $this->assertEquals([], $proxies);
+        $this->assertFalse(Cache::has('cloudflare.proxies'));
+    }
 }

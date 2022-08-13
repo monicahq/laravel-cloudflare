@@ -32,6 +32,10 @@ class Reload extends Command
      */
     public function handle(Cache $cache, Config $config)
     {
+        if (! (bool) $config->get('laravelcloudflare.enabled')) {
+            return;
+        }
+
         $proxies = LaravelCloudflare::getProxies();
 
         $cache->store()->forever($config->get('laravelcloudflare.cache'), $proxies);
