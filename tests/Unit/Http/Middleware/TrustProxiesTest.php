@@ -4,8 +4,8 @@ namespace Monicahq\Cloudflare\Tests\Unit\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Monicahq\Cloudflare\LaravelCloudflare;
 use Monicahq\Cloudflare\Http\Middleware\TrustProxies;
+use Monicahq\Cloudflare\LaravelCloudflare;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
 
 class TrustProxiesTest extends FeatureTestCase
