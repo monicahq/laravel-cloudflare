@@ -3,8 +3,8 @@
 namespace Monicahq\Cloudflare\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Cache\Factory;
-use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Cache\Factory as Cache;
+use Illuminate\Contracts\Config\Repository as Config;
 
 class View extends Command
 {
@@ -25,22 +25,16 @@ class View extends Command
     /**
      * Execute the console command.
      *
-     * @param  Factory  $cache
-     * @param  Repository  $config
+     * @param  \Illuminate\Contracts\Cache\Factory  $cache
+     * @param  \Illuminate\Contracts\Config\Repository  $config
      * @return void
      */
-    public function handle(Factory $cache, Repository $config)
+    public function handle(Cache $cache, Config $config)
     {
         $proxies = $cache->store()->get($config->get('laravelcloudflare.cache'), []);
 
-        $rows = array_map(function ($value): array {
-            return [
-                $value,
-            ];
-        }, $proxies);
+        $rows = array_map(fn ($value): array => [$value], $proxies);
 
-        $this->table([
-            'Address',
-        ], $rows);
+        $this->table(['Address'], $rows);
     }
 }

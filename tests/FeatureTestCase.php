@@ -18,8 +18,6 @@ class FeatureTestCase extends TestCase
     {
         parent::resolveApplicationCore($app);
 
-        $app->detectEnvironment(function () {
-            return 'testing';
-        });
+        $app->detectEnvironment(fn () => 'testing');
     }
 }
