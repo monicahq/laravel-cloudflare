@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'enabled' => env('LARAVEL_CLOUDFLARE_ENABLED', true),
+    'enabled' => (bool) env('LARAVEL_CLOUDFLARE_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------

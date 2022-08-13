@@ -32,8 +32,7 @@ class Reload extends Command
      */
     public function handle(Cache $cache, Config $config)
     {
-        if(! $config->get('laravelcloudflare.enabled')) {
-            $cache->store()->forget($config->get('laravelcloudflare.cache'));
+        if(! (bool) $config->get('laravelcloudflare.enabled')) {
             return;
         }
 
