@@ -1,3 +1,10 @@
+## [3.3.0](https://github.com/monicahq/laravel-cloudflare/compare/3.2.3...3.3.0) (2022-08-13)
+
+
+### Features
+
+* add a laravelcloudflare.enabled config ([#254](https://github.com/monicahq/laravel-cloudflare/issues/254)) ([8031864](https://github.com/monicahq/laravel-cloudflare/commit/80318641a7a85bf29e6c24cf850309bb12df1486))
+
 ## [3.2.3](https://github.com/monicahq/laravel-cloudflare/compare/3.2.2...3.2.3) (2022-08-13)
 
 ## [3.2.2](https://github.com/monicahq/laravel-cloudflare/compare/3.2.1...3.2.2) (2022-01-30)
