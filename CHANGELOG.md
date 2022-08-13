@@ -1,3 +1,10 @@
+## [3.3.1](https://github.com/monicahq/laravel-cloudflare/compare/3.3.0...3.3.1) (2022-08-13)
+
+
+### Bug Fixes
+
+* fix config comment ([#256](https://github.com/monicahq/laravel-cloudflare/issues/256)) ([99c1bad](https://github.com/monicahq/laravel-cloudflare/commit/99c1bad81341628ca650ebb88e34104b1c117f90))
+
 ## [3.3.0](https://github.com/monicahq/laravel-cloudflare/compare/3.2.3...3.3.0) (2022-08-13)
 
 
