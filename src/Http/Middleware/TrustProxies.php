@@ -11,11 +11,27 @@ use Monicahq\Cloudflare\LaravelCloudflare;
 class TrustProxies extends Middleware
 {
     /**
+     * Sets the trusted proxies on the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function setTrustedProxyIpAddresses(Request $request)
+    {
+        if(Config::get('laravelcloudflare.enabled')) {
+            $this->setTrustedProxyCloudflare($request);
+        }
+
+        parent::setTrustedProxyIpAddresses($request);
+    }
+
+    /**
      * Sets the trusted proxies on the request to the value of Cloudflare ips.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @return void
      */
-    protected function setTrustedProxyIpAddresses(Request $request)
+    protected function setTrustedProxyCloudflare(Request $request): void
     {
         $cacheKey = Config::get('laravelcloudflare.cache');
         $cachedProxies = Cache::rememberForever($cacheKey, fn () => LaravelCloudflare::getProxies());
@@ -23,7 +39,5 @@ class TrustProxies extends Middleware
         if (is_array($cachedProxies) && count($cachedProxies) > 0) {
             $this->proxies = array_merge((array) $this->proxies, $cachedProxies);
         }
-
-        parent::setTrustedProxyIpAddresses($request);
     }
 }

@@ -12,6 +12,18 @@ return [
     |
     */
 
+    'enabled' => env('LARAVEL_CLOUDFLARE_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Name of the cache to store values of the proxies
+    |--------------------------------------------------------------------------
+    |
+    | This value is the key used in the cache (table, redis, etc.) to store the
+    | values.
+    |
+    */
+
     'cache' => 'cloudflare.proxies',
 
     /*

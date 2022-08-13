@@ -64,9 +64,7 @@ use Monicahq\Cloudflare\Facades\CloudflareProxies;
  */
 public function boot()
 {
-    LaravelCloudflare::getProxiesUsing(function() {
-        return CloudflareProxies::load();
-    });
+    LaravelCloudflare::getProxiesUsing(fn() => CloudflareProxies::load());
 }
 ```
 
@@ -116,6 +114,17 @@ php artisan vendor:publish --provider="Monicahq\Cloudflare\TrustedProxyServicePr
 ```
 
 This file contains some configurations, but you may not need to change them normally.
+
+## Running tests for your package
+
+When running tests for your package, you generally don't need to get Cloudflare's proxy addresses.
+You can deactivate the Laravel Cloudflare middleware by adding the following environment variable in
+your `.env` or `phpunit.xml` file:
+
+```
+LARAVEL_CLOUDFLARE_ENABLED=false
+```
+
 
 # Compatibility
 
