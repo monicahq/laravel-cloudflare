@@ -65,7 +65,7 @@ class TrustProxiesTest extends FeatureTestCase
     }
 
     /** @test */
-    public function it_deactivate_middleware()
+    public function it_deactivates_middleware()
     {
         config(['laravelcloudflare.enabled' => false]);
 

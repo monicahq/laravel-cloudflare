@@ -18,8 +18,10 @@ class ReloadTest extends FeatureTestCase
 
         $this->artisan('cloudflare:reload')
             ->expectsOutput('Cloudflare\'s IP blocks have been reloaded.')
-            ->assertExitCode(0);
+            ->assertExitCode(0)
+            ->run();
 
+        $this->assertTrue($this->app['cache']->has('cloudflare.proxies'));
         $this->assertEquals(['expect'], $this->app['cache']->get('cloudflare.proxies'));
     }
 
@@ -32,8 +34,22 @@ class ReloadTest extends FeatureTestCase
             'https://fake/ips-v6' => Http::response('::1/32', 200),
         ]);
 
-        $this->artisan('cloudflare:reload');
+        $this->artisan('cloudflare:reload')
+            ->run();
 
         $this->assertEquals(['0.0.0.0/20', '::1/32'], $this->app['cache']->get('cloudflare.proxies'));
+    }
+
+    /** @test */
+    public function it_deactivate_command()
+    {
+        config(['laravelcloudflare.enabled' => false]);
+
+        $this->artisan('cloudflare:reload')
+            ->doesntExpectOutput('Cloudflare\'s IP blocks have been reloaded.')
+            ->assertExitCode(0)
+            ->run();
+
+        $this->assertFalse($this->app['cache']->has('cloudflare.proxies'));
     }
 }
