@@ -4,11 +4,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Name of the cache to store values of the proxies
+    | Enable or disable the middleware proxy and the reload
     |--------------------------------------------------------------------------
     |
-    | This value is the key used in the cache (table, redis, etc.) to store the
-    | values.
+    | If you set it to false, the middleware and the reload command will never
+    | be executed.
     |
     */
 
