@@ -81,7 +81,7 @@ jobs:
 
       - name: Store results
         if: matrix.php-version == env.default-php-version && matrix.laravel_version == env.default-laravel-version
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: results
           path: results
@@ -153,7 +153,7 @@ jobs:
 
       - name: Store changelog file
         if: steps.semantic.outputs.new_release_published == 'true'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: changelog
           path: CHANGELOG.md
