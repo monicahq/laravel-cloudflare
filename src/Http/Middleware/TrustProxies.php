@@ -36,7 +36,7 @@ class TrustProxies extends Middleware
         $cacheKey = Config::get('laravelcloudflare.cache');
         $cachedProxies = Cache::rememberForever($cacheKey, fn () => LaravelCloudflare::getProxies());
 
-        if (is_array($cachedProxies) && count($cachedProxies) > 0) {
+        if (count($cachedProxies) > 0) {
             $this->proxies = array_merge((array) $this->proxies, $cachedProxies);
         }
     }
