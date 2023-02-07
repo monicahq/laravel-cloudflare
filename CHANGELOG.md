@@ -1,3 +1,10 @@
+## [3.5.0](https://github.com/monicahq/laravel-cloudflare/compare/3.4.0...3.5.0) (2023-02-07)
+
+
+### Features
+
+* support Laravel 10.x ([#265](https://github.com/monicahq/laravel-cloudflare/issues/265)) ([156f49f](https://github.com/monicahq/laravel-cloudflare/commit/156f49fa823fbdec4c26691cb83844c9283f14dc))
+
 ## [3.4.0](https://github.com/monicahq/laravel-cloudflare/compare/3.3.1...3.4.0) (2023-02-07)
 
 
