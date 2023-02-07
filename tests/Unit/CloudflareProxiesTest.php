@@ -36,7 +36,7 @@ class CloudflareProxiesTest extends FeatureTestCase
     public function it_loads_ipv4()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
-        $this->app[HttpClient::class] = Http::fake([
+        Http::fake([
             'https://fake/ips-v4' => Http::response('0.0.0.0/20', 200),
         ]);
 
@@ -54,7 +54,7 @@ class CloudflareProxiesTest extends FeatureTestCase
     public function it_loads_ipv6()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
-        $this->app[HttpClient::class] = Http::fake([
+        Http::fake([
             'https://fake/ips-v6' => Http::response('::1/32', 200),
         ]);
 
@@ -72,7 +72,7 @@ class CloudflareProxiesTest extends FeatureTestCase
     public function it_loads_all_ips()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
-        $this->app[HttpClient::class] = Http::fake([
+        Http::fake([
             'https://fake/ips-v4' => Http::response('0.0.0.0/20', 200),
             'https://fake/ips-v6' => Http::response('::1/32', 200),
         ]);
@@ -92,7 +92,7 @@ class CloudflareProxiesTest extends FeatureTestCase
     public function it_loads_all_ips_when_zero_args()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
-        $this->app[HttpClient::class] = Http::fake([
+        Http::fake([
             'https://fake/ips-v4' => Http::response('0.0.0.0/20', 200),
             'https://fake/ips-v6' => Http::response('::1/32', 200),
         ]);
@@ -113,7 +113,7 @@ class CloudflareProxiesTest extends FeatureTestCase
     public function it_throw_error_if_status_ko()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
-        $this->app[HttpClient::class] = Http::fake([
+        Http::fake([
             'https://fake/ips-v4' => Http::response('', 500),
         ]);
 
