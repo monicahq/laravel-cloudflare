@@ -1,3 +1,10 @@
+## [3.4.0](https://github.com/monicahq/laravel-cloudflare/compare/3.3.1...3.4.0) (2023-02-07)
+
+
+### Features
+
+* support php 8.2 and drop php 7.4 support ([#266](https://github.com/monicahq/laravel-cloudflare/issues/266)) ([6909f64](https://github.com/monicahq/laravel-cloudflare/commit/6909f641ea0f05af2dcacd2b6a4fe0e5a4762330))
+
 ## [3.3.1](https://github.com/monicahq/laravel-cloudflare/compare/3.3.0...3.3.1) (2022-08-13)
 
 
