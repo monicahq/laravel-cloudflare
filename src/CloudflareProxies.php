@@ -4,6 +4,7 @@ namespace Monicahq\Cloudflare;
 
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Http\Client\Factory as HttpClient;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
 
@@ -74,7 +75,7 @@ class CloudflareProxies
         try {
             $url = Str::of($this->config->get('laravelcloudflare.url'))->finish('/').$name;
 
-            $response = $this->http->get($url)->throw();
+            $response = Http::get($url)->throw();
         } catch (\Exception $e) {
             throw new UnexpectedValueException('Failed to load trust proxies from Cloudflare server.', 1, $e);
         }
