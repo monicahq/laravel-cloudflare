@@ -28,6 +28,9 @@ jobs:
       matrix:
         php-version: ['8.0', '8.1', '8.2']
         laravel_version: [8.*, 9.*, 10.*]
+        exclude:
+          - laravel: 10.*
+            php-version: 8.0        
     name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.laravel_version }}
 
     steps:
