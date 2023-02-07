@@ -15,9 +15,9 @@ on:
       - created
 
 env:
-  default-php-version: '8.1'
-  default-laravel-version: '8.*'
-  semantic-node-version: 16
+  default-php-version: '8.2'
+  default-laravel-version: '9.*'
+  semantic-node-version: 18
 
 
 jobs:
@@ -26,11 +26,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.4', '8.0', '8.1']
+        php-version: ['8.0', '8.1', '8.2']
         laravel_version: [8.*, 9.*, 10.*]
-        exclude:
-          - php-version: 7.4
-            laravel_version: 9.*
     name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.laravel_version }}
 
     steps:
@@ -41,7 +38,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          coverage: none
+          coverage: pcov
       - name: Check PHP Version
         run: php -v
       - name: Check Composer Version
@@ -73,7 +70,7 @@ jobs:
           composer update --no-interaction --no-progress --prefer-dist
 
       - name: Run test suite
-        run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
+        run: vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
 
       - name: Fix results files
         run: sed -i -e "s%$GITHUB_WORKSPACE/%%g" *.xml
@@ -108,7 +105,7 @@ jobs:
 
       - name: SonarCloud Scan
         if: env.SONAR_TOKEN != ''
-        uses: SonarSource/sonarcloud-github-action@v1.7
+        uses: SonarSource/sonarcloud-github-action@v1.8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -135,7 +132,7 @@ jobs:
           node-version: ${{ env.semantic-node-version }}
 
       - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v3
         id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
