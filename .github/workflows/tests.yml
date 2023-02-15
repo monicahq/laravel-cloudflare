@@ -16,7 +16,7 @@ on:
 
 env:
   default-php-version: '8.2'
-  default-laravel-version: '9.*'
+  default-laravel-version: '10.*'
   semantic-node-version: 18
 
 
@@ -30,7 +30,7 @@ jobs:
         laravel_version: [8.*, 9.*, 10.*]
         exclude:
           - laravel_version: 10.*
-            php-version: 8.0        
+            php-version: 8.0
     name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.laravel_version }}
 
     steps:
