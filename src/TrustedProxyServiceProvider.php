@@ -37,9 +37,12 @@ class TrustedProxyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/laravelcloudflare.php', 'laravelcloudflare'
-        );
+        if (! app()->configurationIsCached()) {
+            $this->mergeConfigFrom(
+                __DIR__.'/../config/laravelcloudflare.php', 'laravelcloudflare'
+            );
+        }
+
         $this->app->singleton(\Monicahq\Cloudflare\Facades\CloudflareProxies::class, \Monicahq\Cloudflare\CloudflareProxies::class);
 
         if ($this->app->runningInConsole()) {
