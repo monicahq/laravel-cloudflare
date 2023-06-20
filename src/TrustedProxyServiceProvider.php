@@ -2,6 +2,7 @@
 
 namespace Monicahq\Cloudflare;
 
+use Illuminate\Contracts\Foundation\CachesConfiguration;
 use Illuminate\Support\ServiceProvider;
 
 class TrustedProxyServiceProvider extends ServiceProvider
@@ -37,7 +38,7 @@ class TrustedProxyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (! app()->configurationIsCached()) {
+        if (! ($this->app instanceof CachesConfiguration && $this->app->configurationIsCached())) {
             $this->mergeConfigFrom(
                 __DIR__.'/../config/laravelcloudflare.php', 'laravelcloudflare'
             );
