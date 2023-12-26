@@ -87,7 +87,7 @@ jobs:
         if: matrix.php-version == env.default-php-version && matrix.laravel_version == env.default-laravel-version
         uses: actions/upload-artifact@v4
         with:
-          name: results-${{ matrix.php-version }}-${{ step.laravel.outputs.version }}
+          name: results-${{ matrix.php-version }}-${{ steps.laravel.outputs.version }}
           path: results
 
 
