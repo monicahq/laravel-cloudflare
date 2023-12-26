@@ -54,7 +54,7 @@ jobs:
 
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - name: Cache composer files
         uses: actions/cache@v3
         with:
@@ -79,11 +79,15 @@ jobs:
         run: sed -i -e "s%$GITHUB_WORKSPACE/%%g" *.xml
         working-directory: results
 
+      - name: Set laravel version
+        id: laravel
+        run: echo "version=${{ matrix.laravel_version }}" | sed "s/*/0/g" >> $GITHUB_OUTPUT
+
       - name: Store results
         if: matrix.php-version == env.default-php-version && matrix.laravel_version == env.default-laravel-version
         uses: actions/upload-artifact@v4
         with:
-          name: results-${{ matrix.php-version }}-${{ matrix.laravel_version }}
+          name: results-${{ matrix.php-version }}-${{ step.laravel.outputs.version }}
           path: results
 
 
