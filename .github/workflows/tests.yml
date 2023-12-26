@@ -54,7 +54,7 @@ jobs:
 
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - name: Cache composer files
         uses: actions/cache@v3
         with:
@@ -79,11 +79,15 @@ jobs:
         run: sed -i -e "s%$GITHUB_WORKSPACE/%%g" *.xml
         working-directory: results
 
+      - name: Set laravel version
+        id: laravel
+        run: echo "version=${{ matrix.laravel_version }}" | sed "s/*/0/g" >> $GITHUB_OUTPUT
+
       - name: Store results
         if: matrix.php-version == env.default-php-version && matrix.laravel_version == env.default-laravel-version
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: results
+          name: results-${{ matrix.php-version }}-${{ steps.laravel.outputs.version }}
           path: results
 
 
@@ -101,14 +105,15 @@ jobs:
           fetch-depth: 0
 
       - name: Download results
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: results
+          pattern: results-*
           path: results
+          merge-multiple: true
 
       - name: SonarCloud Scan
         if: env.SONAR_TOKEN != ''
-        uses: SonarSource/sonarcloud-github-action@v1.9
+        uses: SonarSource/sonarcloud-github-action@v2.1.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -153,7 +158,7 @@ jobs:
 
       - name: Store changelog file
         if: steps.semantic.outputs.new_release_published == 'true'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: changelog
           path: CHANGELOG.md
