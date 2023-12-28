@@ -5,71 +5,7 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  psalm:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php-version: [8.2]
-
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-
-      - name: Setup PHP ${{ matrix.php-version }}
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - name: Cache composer files
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
-          restore-keys: |
-            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
-            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-
-            ${{ runner.os }}-composer-v5-
-
-      - name: Install dependencies
-        run: composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader
-
-      - name: Run psalm
-        run: vendor/bin/psalm --output-format=github
-
-
-  phpstan:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php-version: [8.2]
-
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-
-      - name: Setup PHP ${{ matrix.php-version }}
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - name: Cache composer files
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
-          restore-keys: |
-            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
-            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-
-            ${{ runner.os }}-composer-v5-
-
-      - name: Install dependencies
-        run: composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader
-
-      - name : Run phpstan
-        run: vendor/bin/phpstan analyse
+  statics:
+    uses: monicahq/workflows/.github/workflows/static.yml@init
+    with:
+      php-version: 8.2

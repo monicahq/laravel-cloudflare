@@ -14,151 +14,38 @@ on:
     types:
       - created
 
-env:
-  default-php-version: '8.2'
-  default-laravel-version: '10.*'
-  semantic-node-version: 18
-
-
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    uses: monicahq/workflows/.github/workflows/library.yml@init
+    with:
+      php-version: ${{ matrix.php-version }}
+      laravel-version: ${{ matrix.laravel-version }}
+      coverage: ${{ matrix.php-version == '8.2' && matrix.laravel-version == '10.*' }}
+
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.0', '8.1', '8.2']
-        laravel_version: [8.*, 9.*, 10.*]
+        php-version: [8.0, 8.1, 8.2]
+        laravel-version: [8.*, 9.*, 10.*]
         exclude:
-          - laravel_version: 10.*
-            php-version: 8.0
-    name: PHP ${{ matrix.php-version }} | Illuminate ${{ matrix.laravel_version }}
+          - php-version: 8.0
+            laravel-version: 10.*
 
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-
-      - name: Setup PHP ${{ matrix.php-version }}
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-          coverage: pcov
-      - name: Check PHP Version
-        run: php -v
-      - name: Check Composer Version
-        run: composer -V
-      - name: Check PHP Extensions
-        run: php -m
-
-      - name: Validate composer.json
-        run: composer validate
-
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - name: Cache composer files
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}
-          restore-keys: |
-            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel_version }}
-            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
-            ${{ runner.os }}-composer-v5-${{ hashFiles('**/composer.json') }}-
-            ${{ runner.os }}-composer-v5-
-
-      - name: Install dependencies with Laravel ${{ matrix.laravel_version }}
-        run: |
-          export COMPOSER_ROOT_VERSION=dev-main
-          composer require "illuminate/support:${{ matrix.laravel_version }}" --no-update
-          composer update --no-interaction --no-progress --prefer-dist
-
-      - name: Run test suite
-        run: vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
-
-      - name: Fix results files
-        run: sed -i -e "s%$GITHUB_WORKSPACE/%%g" *.xml
-        working-directory: results
-
-      - name: Set laravel version
-        id: laravel
-        run: echo "version=${{ matrix.laravel_version }}" | sed "s/*/0/g" >> $GITHUB_OUTPUT
-
-      - name: Store results
-        if: matrix.php-version == env.default-php-version && matrix.laravel_version == env.default-laravel-version
-        uses: actions/upload-artifact@v4
-        with:
-          name: results-${{ matrix.php-version }}-${{ steps.laravel.outputs.version }}
-          path: results
-
-
-  ####################
-  # Sonarcloud
-  ####################
   reporting:
+    uses: monicahq/workflows/.github/workflows/reporting.yml@init
+    with:
+      project: monicahq_laravel-cloudflare
+      sources: src
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     needs: tests
-    runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Download results
-        uses: actions/download-artifact@v4
-        with:
-          pattern: results-*
-          path: results
-          merge-multiple: true
-
-      - name: SonarCloud Scan
-        if: env.SONAR_TOKEN != ''
-        uses: SonarSource/sonarcloud-github-action@v2.1.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-
-  ####################
-  # Semantic release
-  ####################
-  semantic-release:
+  release:
+    uses: monicahq/workflows/.github/workflows/release.yml@init
+    secrets:
+      GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
     needs: tests
-    runs-on: ubuntu-latest
-    name: Semantic release
-    if: github.event_name != 'pull_request'
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Get all tags
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.semantic-node-version }}
-
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v4
-        id: semantic
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
-        with:
-          semantic_version: 19
-          extra_plugins: |
-            conventional-changelog-conventionalcommits@5.0.0
-            @semantic-release/changelog@6
-            semantic-release-github-pullrequest
-
-      - name: New release published
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: echo ${{ steps.semantic.outputs.new_release_version }}
-
-      - name: Store changelog file
-        if: steps.semantic.outputs.new_release_published == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: changelog
-          path: CHANGELOG.md
+  junit:
+    uses: monicahq/workflows/.github/workflows/junit.yml@init
+    needs: tests
