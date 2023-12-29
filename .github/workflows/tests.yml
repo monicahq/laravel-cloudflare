@@ -16,7 +16,7 @@ on:
 
 jobs:
   tests:
-    uses: monicahq/workflows/.github/workflows/library.yml@init
+    uses: monicahq/workflows/.github/workflows/library.yml@main
     with:
       php-version: ${{ matrix.php-version }}
       laravel-version: ${{ matrix.laravel-version }}
@@ -32,7 +32,7 @@ jobs:
             laravel-version: 10.*
 
   reporting:
-    uses: monicahq/workflows/.github/workflows/reporting.yml@init
+    uses: monicahq/workflows/.github/workflows/reporting.yml@main
     with:
       project: monicahq_laravel-cloudflare
       sources: src
@@ -41,7 +41,7 @@ jobs:
     needs: tests
 
   release:
-    uses: monicahq/workflows/.github/workflows/release.yml@init
+    uses: monicahq/workflows/.github/workflows/release.yml@main
     secrets:
       GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
     needs: tests
