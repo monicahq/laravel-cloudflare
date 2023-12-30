@@ -16,18 +16,20 @@ on:
 
 jobs:
   tests:
+    name: Run tests
     uses: monicahq/workflows/.github/workflows/library.yml@main
     with:
       php-versions: "['8.0', '8.1', '8.2']"
       laravel-versions: "['8.*', '9.*', '10.*']"
       default-php-version: '8.2'
-      laravel-version: '10.*'
+      default-laravel-version: '10.*'
       matrix-exclude: "[{'php-version': '8.0', 'laravel-version': '10.*'}]"
       project: monicahq_laravel-cloudflare
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   release:
+    name: Release
     uses: monicahq/workflows/.github/workflows/release.yml@main
     secrets:
       GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
