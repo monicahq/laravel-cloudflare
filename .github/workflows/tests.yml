@@ -17,7 +17,7 @@ on:
 jobs:
   tests:
     name: Run tests
-    uses: monicahq/workflows/.github/workflows/library.yml@main
+    uses: monicahq/workflows/.github/workflows/library.yml@v1
     with:
       php-versions: "['8.0', '8.1', '8.2']"
       laravel-versions: "['8.*', '9.*', '10.*']"
@@ -30,7 +30,7 @@ jobs:
 
   release:
     name: Release
-    uses: monicahq/workflows/.github/workflows/release.yml@main
+    uses: monicahq/workflows/.github/workflows/release.yml@v1
     secrets:
       GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
     needs: tests
