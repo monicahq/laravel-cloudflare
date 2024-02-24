@@ -14,10 +14,15 @@ on:
     types:
       - created
 
+permissions:
+  contents: read
+  checks: write
+  id-token: write
+
 jobs:
   tests:
     name: Run tests
-    uses: monicahq/workflows/.github/workflows/library.yml@v1
+    uses: monicahq/workflows/.github/workflows/library.yml@v2
     with:
       php-versions: "['8.0', '8.1', '8.2']"
       laravel-versions: "['8.*', '9.*', '10.*']"
@@ -30,7 +35,7 @@ jobs:
 
   release:
     name: Release
-    uses: monicahq/workflows/.github/workflows/release.yml@v1
+    uses: monicahq/workflows/.github/workflows/release.yml@v2
     secrets:
       GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
     needs: tests
