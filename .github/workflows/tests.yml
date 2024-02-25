@@ -24,11 +24,11 @@ jobs:
     name: Run tests
     uses: monicahq/workflows/.github/workflows/library.yml@v2
     with:
-      php-versions: "['8.0', '8.1', '8.2']"
-      laravel-versions: "['8.*', '9.*', '10.*']"
+      php-versions: "['8.0', '8.1', '8.2', '8.3']"
+      laravel-versions: "['8.*', '9.*', '10.*', '11.*']"
       default-php-version: '8.2'
       default-laravel-version: '10.*'
-      matrix-exclude: "[{'php-version': '8.0', 'laravel-version': '10.*'}]"
+      matrix-exclude: "[{'php-version': '8.0', 'laravel-version': '10.*'},{'php-version': '8.0', 'laravel-version': '11.*'},{'php-version': '8.1', 'laravel-version': '11.*'}]"
       project: monicahq_laravel-cloudflare
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
