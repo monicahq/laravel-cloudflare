@@ -2,6 +2,7 @@
 
 namespace Monicahq\Cloudflare;
 
+use Closure;
 use Monicahq\Cloudflare\Facades\CloudflareProxies;
 
 final class LaravelCloudflare
@@ -15,8 +16,6 @@ final class LaravelCloudflare
 
     /**
      * Get the proxies addresses.
-     *
-     * @return array
      */
     public static function getProxies(): array
     {
@@ -29,11 +28,8 @@ final class LaravelCloudflare
 
     /**
      * Set a callback that should be used when getting the proxies addresses.
-     *
-     * @param  \Closure  $callback
-     * @return void
      */
-    public static function getProxiesUsing($callback): void
+    public static function getProxiesUsing(?Closure $callback): void
     {
         static::$getProxiesCallback = $callback;
     }

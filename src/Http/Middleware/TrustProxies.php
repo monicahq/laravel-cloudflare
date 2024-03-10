@@ -2,6 +2,7 @@
 
 namespace Monicahq\Cloudflare\Http\Middleware;
 
+use Closure;
 use Illuminate\Http\Middleware\TrustProxies as Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -11,12 +12,33 @@ use Monicahq\Cloudflare\LaravelCloudflare;
 class TrustProxies extends Middleware
 {
     /**
-     * Sets the trusted proxies on the request.
+     * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
-    protected function setTrustedProxyIpAddresses(Request $request)
+    public function handle(Request $request, Closure $next)
+    {
+        if (Config::get('laravelcloudflare.replace_ip') === true) {
+            $this->setRemoteAddr($request);
+        }
+
+        return parent::handle($request, $next);
+    }
+
+    /**
+     * Set RemoteAddr server value using Cf-Connecting-Ip header.
+     */
+    protected function setRemoteAddr(Request $request): void
+    {
+        if (($ip = $request->header('Cf-Connecting-Ip')) !== null) {
+            $request->server->set('REMOTE_ADDR', $ip);
+        }
+    }
+
+    /**
+     * Sets the trusted proxies on the request.
+     */
+    protected function setTrustedProxyIpAddresses(Request $request): void
     {
         if ((bool) Config::get('laravelcloudflare.enabled')) {
             $this->setTrustedProxyCloudflare($request);
@@ -27,9 +49,6 @@ class TrustProxies extends Middleware
 
     /**
      * Sets the trusted proxies on the request to the value of Cloudflare ips.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
      */
     protected function setTrustedProxyCloudflare(Request $request): void
     {

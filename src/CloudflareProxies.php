@@ -32,9 +32,6 @@ class CloudflareProxies
 
     /**
      * Create a new instance of CloudflareProxies.
-     *
-     * @param  \Illuminate\Contracts\Config\Repository  $config
-     * @param  \Illuminate\Http\Client\Factory  $http
      */
     public function __construct(Repository $config, HttpClient $http)
     {
@@ -44,11 +41,8 @@ class CloudflareProxies
 
     /**
      * Retrieve Cloudflare proxies list.
-     *
-     * @param  int  $type
-     * @return array
      */
-    public function load($type = self::IP_VERSION_ANY): array
+    public function load(int $type = self::IP_VERSION_ANY): array
     {
         $proxies = [];
 
@@ -66,14 +60,11 @@ class CloudflareProxies
 
     /**
      * Retrieve requested proxy list by name.
-     *
-     * @param  string  $name  requet name
-     * @return array
      */
-    protected function retrieve($name): array
+    protected function retrieve(string $name): array
     {
         try {
-            $url = Str::of($this->config->get('laravelcloudflare.url'))->finish('/').$name;
+            $url = Str::of($this->config->get('laravelcloudflare.url', 'https://www.cloudflare.com/'))->finish('/').$name;
 
             $response = Http::get($url)->throw();
         } catch (\Exception $e) {

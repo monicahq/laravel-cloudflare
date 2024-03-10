@@ -25,12 +25,8 @@ class Reload extends Command
 
     /**
      * Execute the console command.
-     *
-     * @param  \Illuminate\Contracts\Cache\Factory  $cache
-     * @param  \Illuminate\Contracts\Config\Repository  $config
-     * @return void
      */
-    public function handle(Cache $cache, Config $config)
+    public function handle(Cache $cache, Config $config): void
     {
         if (! (bool) $config->get('laravelcloudflare.enabled')) {
             return;

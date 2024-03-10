@@ -4,6 +4,7 @@ namespace Monicahq\Cloudflare\Tests\Unit\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Route;
 use Monicahq\Cloudflare\Http\Middleware\TrustProxies;
 use Monicahq\Cloudflare\LaravelCloudflare;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
@@ -77,5 +78,17 @@ class TrustProxiesTest extends FeatureTestCase
 
         $this->assertEquals([], $proxies);
         $this->assertFalse(Cache::has('cloudflare.proxies'));
+    }
+
+    /** @test */
+    public function it_sets_remote_addr()
+    {
+        $request = new Request();
+        $request->server->set('REMOTE_ADDR', '127.0.0.1');
+        $request->headers->set('Cf-Connecting-Ip', '127.0.1.1');
+
+        $this->app->make(TrustProxies::class)->handle($request, fn () => null);
+
+        $this->assertEquals('127.0.1.1', $request->ip());
     }
 }
