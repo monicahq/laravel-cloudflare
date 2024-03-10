@@ -16,6 +16,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Replace current remote addr with Cf-Connecting-Ip header
+    |--------------------------------------------------------------------------
+    |
+    | This replace the request ip with the value of the Cf-Connecting-Ip header.
+    |
+    */
+
+    'replace_ip' => (bool) env('LARAVEL_CLOUDFLARE_REPLACE_IP', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Name of the cache to store values of the proxies
     |--------------------------------------------------------------------------
     |

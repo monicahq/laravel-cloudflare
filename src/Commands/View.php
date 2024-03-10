@@ -24,12 +24,8 @@ class View extends Command
 
     /**
      * Execute the console command.
-     *
-     * @param  \Illuminate\Contracts\Cache\Factory  $cache
-     * @param  \Illuminate\Contracts\Config\Repository  $config
-     * @return void
      */
-    public function handle(Cache $cache, Config $config)
+    public function handle(Cache $cache, Config $config): void
     {
         $proxies = $cache->store()->get($config->get('laravelcloudflare.cache'), []);
 

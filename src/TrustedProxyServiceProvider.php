@@ -8,20 +8,16 @@ class TrustedProxyServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any package services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerPublishing();
     }
 
     /**
      * Register the package's publishable resources.
-     *
-     * @return void
      */
-    private function registerPublishing()
+    private function registerPublishing(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -32,10 +28,8 @@ class TrustedProxyServiceProvider extends ServiceProvider
 
     /**
      * Register any package services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__.'/../config/laravelcloudflare.php', 'laravelcloudflare'
