@@ -1,0 +1,14 @@
+name: Lint files
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: Lint files ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php:
+    name: Lint PHP files
+    uses: monicahq/workflows/.github/workflows/lint_php.yml@v2

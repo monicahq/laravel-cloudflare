@@ -4,7 +4,6 @@ namespace Monicahq\Cloudflare\Tests\Unit\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Route;
 use Monicahq\Cloudflare\Http\Middleware\TrustProxies;
 use Monicahq\Cloudflare\LaravelCloudflare;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;

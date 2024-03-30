@@ -19,8 +19,8 @@ final class LaravelCloudflare
      */
     public static function getProxies(): array
     {
-        if (static::$getProxiesCallback !== null) {
-            return call_user_func(static::$getProxiesCallback);
+        if (self::$getProxiesCallback !== null) {
+            return call_user_func(self::$getProxiesCallback);
         }
 
         return CloudflareProxies::load();
@@ -31,6 +31,6 @@ final class LaravelCloudflare
      */
     public static function getProxiesUsing(?Closure $callback): void
     {
-        static::$getProxiesCallback = $callback;
+        self::$getProxiesCallback = $callback;
     }
 }
