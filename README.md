@@ -16,36 +16,18 @@ Add Cloudflare ip addresses to trusted proxies for Laravel.
 composer require monicahq/laravel-cloudflare
 ```
 
-You don't need to add this package to your service providers.
 
+1. Configure Middleware
 
-2. Configure Middleware
-- _Option 1_: **Add Cloudflare TrustProxies middleware and remove default one**
+Replace `TrustProxies` middleware in your `bootstrap/app.php` file:
 
-Replace `TrustProxies` middleware in `app/Http/Kernel.php`, by modifying the `middleware` array:
-
-```diff
-  protected $middleware = [
--     \App\Http\Middleware\TrustProxies::class,
-+     \Monicahq\Cloudflare\Http\Middleware\TrustProxies::class
-  ...
-
-```
-
-- _Option 2_: **Extend current middleware to use Cloudflare TrustProxies middleware**
-
-Another option is to extend the `App\Http\Middleware\TrustProxies` class to `Monicahq\Cloudflare\Http\Middleware\TrustProxies`:
-
-```diff
-  namespace App\Http\Middleware;
-
-  use Illuminate\Http\Request;
-- use Illuminate\Http\Middleware\TrustProxies as Middleware;
-+ use Monicahq\Cloudflare\Http\Middleware\TrustProxies as Middleware;
-
-  class TrustProxies extends Middleware
-  {
-      ...
+```php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->replace(
+        \Illuminate\Http\Middleware\TrustProxies::class,
+        \Monicahq\Cloudflare\Http\Middleware\TrustProxies::class
+    );
+})
 ```
 
 ## Custom proxies callback
@@ -54,17 +36,19 @@ You can define your own proxies callback by calling the `LaravelCloudflare::getP
 This method should typically be called in the `boot` method of your `AppServiceProvider` class:
 
 ```php
+use Illuminate\Support\ServiceProvider;
 use Monicahq\Cloudflare\LaravelCloudflare;
 use Monicahq\Cloudflare\Facades\CloudflareProxies;
 
-/**
- * Bootstrap any application services.
- *
- * @return void
- */
-public function boot()
+class AppServiceProvider extends ServiceProvider
 {
-    LaravelCloudflare::getProxiesUsing(fn() => CloudflareProxies::load());
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        LaravelCloudflare::getProxiesUsing(fn() => CloudflareProxies::load());
+    }
 }
 ```
 
@@ -89,12 +73,14 @@ Use the `cloudflare:reload` artisan command to refresh the IP blocks:
 php artisan cloudflare:reload
 ```
 
-## Suggestion: add the command in the schedule
+## Suggestion: add the reload command in the schedule
 
-Add a new line in `app/Console/Kernel.php`, in the `schedule` function:
+Add a schedule to your `routes/console.php` file to refresh the cache, for instance:
 
 ```php
-$schedule->command('cloudflare:reload')->daily();
+use Illuminate\Support\Facades\Schedule;
+
+Schedule::command('cloudflare:reload')->daily();
 ```
 
 # View current Cloudflare's IP blocks
@@ -132,7 +118,7 @@ LARAVEL_CLOUDFLARE_ENABLED=false
 |----------|----------|
 | 5.x-6.x  | <= 1.8.0 |
 | 7.x-8.53 |  2.0.0   |
-| 8.54-9.x | >= 3.0.0 |
+| >= 8.54 | >= 3.0.0 |
 
 
 # Citations
@@ -146,6 +132,6 @@ Author: [Alexis Saettler](https://github.com/asbiin)
 
 This project is part of [MonicaHQ](https://github.com/monicahq/).
 
-Copyright © 2019–2022.
+Copyright © 2019–2024.
 
 Licensed under the MIT License. [View license](LICENSE.md).
