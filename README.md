@@ -4,7 +4,7 @@ Add Cloudflare ip addresses to trusted proxies for Laravel.
 
 [![Latest Version](https://img.shields.io/packagist/v/monicahq/laravel-cloudflare?style=flat-square&label=Latest%20Version)](https://github.com/monicahq/laravel-cloudflare/releases)
 [![Downloads](https://img.shields.io/packagist/dt/monicahq/laravel-cloudflare?style=flat-square&label=Downloads)](https://packagist.org/packages/monicahq/laravel-cloudflare)
-[![Workflow Status](https://img.shields.io/github/workflow/status/monicahq/laravel-cloudflare/Unit%20tests?style=flat-square&label=Workflow%20Status)](https://github.com/monicahq/laravel-cloudflare/actions?query=branch%3Amain)
+[![Workflow Status](https://img.shields.io/github/actions/workflow/status/monicahq/laravel-cloudflare/tests.yml?branch=main&style=flat-square&label=Workflow%20Status)](https://github.com/monicahq/laravel-cloudflare/actions?query=branch%3Amain)
 [![Quality Gate](https://img.shields.io/sonar/quality_gate/monicahq_laravel-cloudflare?server=https%3A%2F%2Fsonarcloud.io&style=flat-square&label=Quality%20Gate)](https://sonarcloud.io/dashboard?id=monicahq_laravel-cloudflare)
 [![Coverage Status](https://img.shields.io/sonar/coverage/monicahq_laravel-cloudflare?server=https%3A%2F%2Fsonarcloud.io&style=flat-square&label=Coverage%20Status)](https://sonarcloud.io/dashboard?id=monicahq_laravel-cloudflare)
 
