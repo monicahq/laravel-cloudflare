@@ -7,6 +7,6 @@ on:
 jobs:
   statics:
     name: Static analysis
-    uses: monicahq/workflows/.github/workflows/static.yml@v2
+    uses: monicahq/workflows/.github/workflows/static.yml@20240504-static
     with:
       php-version: 8.3
