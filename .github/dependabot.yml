@@ -6,21 +6,9 @@ updates:
     directory: "/"
     schedule:
       interval: weekly
-      time: "11:00"
-    labels:
-      - actions
-      - dependencies
-      - auto-squash
 
   # Maintain dependencies for Composer
   - package-ecosystem: composer
     directory: "/"
     schedule:
       interval: weekly
-      time: "07:00"
-    open-pull-requests-limit: 10
-    versioning-strategy: lockfile-only
-    labels:
-      - php
-      - dependencies
-      - auto-squash

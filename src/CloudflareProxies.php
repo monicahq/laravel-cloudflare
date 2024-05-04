@@ -10,33 +10,34 @@ use UnexpectedValueException;
 
 class CloudflareProxies
 {
+    /**
+     * Use IPv4 addresses.
+     *
+     * @var int
+     */
     public const IP_VERSION_4 = 1 << 0;
 
+    /**
+     * Use IPv6 addresses.
+     *
+     * @var int
+     */
     public const IP_VERSION_6 = 1 << 1;
 
+    /**
+     * Use any IP addresses.
+     *
+     * @var int
+     */
     public const IP_VERSION_ANY = self::IP_VERSION_4 | self::IP_VERSION_6;
-
-    /**
-     * The config repository instance.
-     *
-     * @var Repository
-     */
-    protected $config;
-
-    /**
-     * The http factory instance.
-     *
-     * @var HttpClient
-     */
-    protected $http;
 
     /**
      * Create a new instance of CloudflareProxies.
      */
-    public function __construct(Repository $config, HttpClient $http)
-    {
-        $this->config = $config;
-        $this->http = $http;
+    public function __construct(
+        protected Repository $config,
+        protected HttpClient $http
+    ) {
     }
 
     /**
