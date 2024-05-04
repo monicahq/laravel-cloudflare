@@ -82,6 +82,8 @@ class TrustProxiesTest extends FeatureTestCase
     /** @test */
     public function it_sets_remote_addr()
     {
+        config(['laravelcloudflare.replace_ip' => true]);
+
         $request = new Request();
         $request->server->set('REMOTE_ADDR', '127.0.0.1');
         $request->headers->set('Cf-Connecting-Ip', '127.0.1.1');
