@@ -46,7 +46,7 @@ return [
     |
     */
 
-    'url' => 'https://www.cloudflare.com',
+    'url' => 'https://api.cloudflare.com/client/v4/ips',
 
     /*
     |--------------------------------------------------------------------------

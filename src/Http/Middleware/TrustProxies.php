@@ -32,6 +32,8 @@ class TrustProxies extends Middleware
     {
         if (($ip = $request->header('Cf-Connecting-Ip')) !== null) {
             $request->server->set('REMOTE_ADDR', $ip);
+        } elseif (($ip = $request->header('X-Forwarded-For')) !== null) {
+            $request->server->set('REMOTE_ADDR', $ip);
         }
     }
 
