@@ -56,7 +56,11 @@ class TrustProxies extends Middleware
         $cachedProxies = Cache::rememberForever($cacheKey, fn () => LaravelCloudflare::getProxies());
 
         if (count($cachedProxies) > 0) {
-            $this->proxies = array_merge((array) $this->proxies, $cachedProxies);
+            parent::at(collect((array) parent::$alwaysTrustProxies)
+                ->merge($cachedProxies)
+                ->unique()
+                ->toArray()
+            );
         }
     }
 }
