@@ -26,7 +26,7 @@
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3 || ^7.0",
         "jschaedl/composer-git-hooks": "^4.0",
-        "larastan/larastan": "^1.0 || ^2.4",
+        "larastan/larastan": "^1.0 || ^2.4 || ^3.0",
         "laravel/pint": "^1.15",
         "mockery/mockery": "^1.4",
         "ocramius/package-versions": "^1.5 || ^2.1",
