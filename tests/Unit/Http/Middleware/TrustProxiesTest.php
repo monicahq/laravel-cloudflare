@@ -17,7 +17,7 @@ class TrustProxiesTest extends FeatureTestCase
             ->with('cloudflare.proxies', \Closure::class)
             ->andReturn(['expect']);
 
-        $request = new Request();
+        $request = new Request;
 
         $this->app->make(TrustProxies::class)->handle($request, fn () => null);
 
@@ -34,7 +34,7 @@ class TrustProxiesTest extends FeatureTestCase
         });
 
         try {
-            $request = new Request();
+            $request = new Request;
 
             $this->app->make(TrustProxies::class)->handle($request, fn () => null);
 
@@ -55,7 +55,7 @@ class TrustProxiesTest extends FeatureTestCase
             ->with('cloudflare.proxies', \Closure::class)
             ->andReturn([]);
 
-        $request = new Request();
+        $request = new Request;
 
         $this->app->make(TrustProxies::class)->handle($request, fn () => null);
 
@@ -69,7 +69,7 @@ class TrustProxiesTest extends FeatureTestCase
     {
         config(['laravelcloudflare.enabled' => false]);
 
-        $request = new Request();
+        $request = new Request;
 
         $this->app->make(TrustProxies::class)->handle($request, fn () => null);
 
@@ -84,7 +84,7 @@ class TrustProxiesTest extends FeatureTestCase
     {
         config(['laravelcloudflare.replace_ip' => true]);
 
-        $request = new Request();
+        $request = new Request;
         $request->server->set('REMOTE_ADDR', '127.0.0.1');
         $request->headers->set('Cf-Connecting-Ip', '127.0.1.1');
 

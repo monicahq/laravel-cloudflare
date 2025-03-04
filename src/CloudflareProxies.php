@@ -37,8 +37,7 @@ class CloudflareProxies
     public function __construct(
         protected Repository $config,
         protected HttpClient $http
-    ) {
-    }
+    ) {}
 
     /**
      * Retrieve Cloudflare proxies list.
@@ -72,6 +71,6 @@ class CloudflareProxies
             throw new UnexpectedValueException('Failed to load trust proxies from Cloudflare server.', 1, $e);
         }
 
-        return array_filter(explode("\n", $response->body()));
+        return array_filter(explode("\n", $response->body())); // @phpstan-ignore arrayFilter.strict
     }
 }

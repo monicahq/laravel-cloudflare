@@ -25,7 +25,7 @@ class LaravelCloudflareTest extends FeatureTestCase
         });
 
         try {
-            $request = new Request();
+            $request = new Request;
 
             $this->app->make(TrustProxies::class)->handle($request, fn () => null);
 
@@ -45,7 +45,7 @@ class LaravelCloudflareTest extends FeatureTestCase
             ->once()
             ->andReturn(['expect']);
 
-        $request = new Request();
+        $request = new Request;
 
         $this->app->make(TrustProxies::class)->handle($request, fn () => null);
 

@@ -29,6 +29,7 @@ class TrustedProxyServiceProvider extends ServiceProvider
     /**
      * Register any package services.
      */
+    #[\Override]
     public function register(): void
     {
         $this->mergeConfigFrom(
