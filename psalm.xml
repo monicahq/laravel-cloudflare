@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    findUnusedBaselineEntry="true"
+    findUnusedBaselineEntry="false"
     findUnusedCode="false"
 >
     <projectFiles>
@@ -35,6 +35,12 @@
                 <file name="src/Http/Middleware/TrustProxies.php" />
             </errorLevel>
         </ClassMustBeFinal>
+
+        <MissingClassConstType>
+            <errorLevel type="suppress">
+                <file name="src/CloudflareProxies.php" />
+            </errorLevel>
+        </MissingClassConstType>
 
     </issueHandlers>
 </psalm>

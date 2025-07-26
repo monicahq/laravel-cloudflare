@@ -12,18 +12,24 @@ class CloudflareProxies
 {
     /**
      * Use IPv4 addresses.
+     *
+     * @var int
      */
-    public const int IP_VERSION_4 = 1 << 0;
+    public const IP_VERSION_4 = 1 << 0;
 
     /**
      * Use IPv6 addresses.
+     *
+     * @var int
      */
-    public const int IP_VERSION_6 = 1 << 1;
+    public const IP_VERSION_6 = 1 << 1;
 
     /**
      * Use any IP addresses.
+     *
+     * @var int
      */
-    public const int IP_VERSION_ANY = self::IP_VERSION_4 | self::IP_VERSION_6;
+    public const IP_VERSION_ANY = self::IP_VERSION_4 | self::IP_VERSION_6;
 
     /**
      * Create a new instance of CloudflareProxies.
