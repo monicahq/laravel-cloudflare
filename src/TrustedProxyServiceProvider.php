@@ -4,7 +4,7 @@ namespace Monicahq\Cloudflare;
 
 use Illuminate\Support\ServiceProvider;
 
-class TrustedProxyServiceProvider extends ServiceProvider
+final class TrustedProxyServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any package services.

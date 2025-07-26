@@ -64,7 +64,7 @@ class CloudflareProxies
     protected function retrieve(string $name): array
     {
         try {
-            $url = Str::of($this->config->get('laravelcloudflare.url', 'https://www.cloudflare.com/'))->finish('/').$name;
+            $url = ((string) Str::of($this->config->get('laravelcloudflare.url', 'https://www.cloudflare.com/'))->finish('/')).$name;
 
             $response = Http::get($url)->throw();
         } catch (\Exception $e) {
