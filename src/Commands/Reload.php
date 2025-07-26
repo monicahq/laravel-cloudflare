@@ -19,7 +19,7 @@ class Reload extends Command
     /**
      * The console command description.
      *
-     * @var string|null
+     * @var string
      */
     protected $description = 'Reload trust proxies IPs and store in cache.';
 
