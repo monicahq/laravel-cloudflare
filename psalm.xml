@@ -31,6 +31,7 @@
 
         <ClassMustBeFinal>
             <errorLevel type="suppress">
+                <file name="src/CloudflareProxies.php" />
                 <file name="src/Http/Middleware/TrustProxies.php" />
             </errorLevel>
         </ClassMustBeFinal>

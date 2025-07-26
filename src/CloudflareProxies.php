@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
 
-final class CloudflareProxies
+class CloudflareProxies
 {
     /**
      * Use IPv4 addresses.
