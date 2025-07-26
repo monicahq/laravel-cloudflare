@@ -16,6 +16,7 @@ class TrustProxies extends Middleware
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
+    #[\Override]
     public function handle(Request $request, Closure $next)
     {
         if (Config::get('laravelcloudflare.replace_ip') === true) {
@@ -38,6 +39,7 @@ class TrustProxies extends Middleware
     /**
      * Sets the trusted proxies on the request.
      */
+    #[\Override]
     protected function setTrustedProxyIpAddresses(Request $request): void
     {
         if ((bool) Config::get('laravelcloudflare.enabled')) {

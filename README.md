@@ -116,9 +116,10 @@ LARAVEL_CLOUDFLARE_ENABLED=false
 
 | Laravel  | [monicahq/laravel-cloudflare](https://github.com/monicahq/laravel-cloudflare) |
 |----------|----------|
-| 5.x-6.x  | <= 1.8.0 |
-| 7.x-8.53 |  2.0.0   |
-| >= 8.54 | >= 3.0.0 |
+| 5.x-6.x  | <= 1.8 |
+| 7.x-8.53 |  2.x   |
+| 8.54-12.0 | 3.x |
+| >= 11.0 | >= 4.x |
 
 
 # Citations
@@ -132,6 +133,6 @@ Author: [Alexis Saettler](https://github.com/asbiin)
 
 This project is part of [MonicaHQ](https://github.com/monicahq/).
 
-Copyright © 2019–2024.
+Copyright © 2019–2025.
 
 Licensed under the MIT License. [View license](LICENSE.md).
