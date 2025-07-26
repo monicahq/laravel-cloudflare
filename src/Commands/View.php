@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Contracts\Cache\Factory as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
 
-class View extends Command
+final class View extends Command
 {
     /**
      * The name and signature of the console command.

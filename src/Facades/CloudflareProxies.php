@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see \Monicahq\Cloudflare\CloudflareProxies
  */
-class CloudflareProxies extends Facade
+final class CloudflareProxies extends Facade
 {
     /**
      * Get the registered name of the component.

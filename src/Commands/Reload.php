@@ -7,7 +7,7 @@ use Illuminate\Contracts\Cache\Factory as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
 use Monicahq\Cloudflare\LaravelCloudflare;
 
-class Reload extends Command
+final class Reload extends Command
 {
     /**
      * The name and signature of the console command.

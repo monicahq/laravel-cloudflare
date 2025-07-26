@@ -29,11 +29,11 @@
             </errorLevel>
         </MissingClosureParamType>
 
-        <MissingClassConstType>
+        <ClassMustBeFinal>
             <errorLevel type="suppress">
-                <file name="src/CloudflareProxies.php" />
+                <file name="src/Http/Middleware/TrustProxies.php" />
             </errorLevel>
-        </MissingClassConstType>
+        </ClassMustBeFinal>
 
     </issueHandlers>
 </psalm>
