@@ -10,4 +10,3 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     level: 5
     ignoreErrors:
-    excludes_analyse:
