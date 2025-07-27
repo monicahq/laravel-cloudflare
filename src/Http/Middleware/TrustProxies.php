@@ -55,14 +55,17 @@ class TrustProxies extends Middleware
     protected function setTrustedProxyCloudflare(Request $request): void
     {
         $cacheKey = Config::get('laravelcloudflare.cache');
-        $cachedProxies = Cache::rememberForever($cacheKey, fn () => LaravelCloudflare::getProxies());
 
-        if (count($cachedProxies) > 0) {
-            parent::at(collect((array) parent::$alwaysTrustProxies)
-                ->merge($cachedProxies)
-                ->unique()
-                ->toArray()
-            );
-        }
+        Cache::lock($cacheKey, 5)->get(function () use ($cacheKey) {
+            $cachedProxies = Cache::rememberForever($cacheKey, fn () => LaravelCloudflare::getProxies());
+
+            if (count($cachedProxies) > 0) {
+                parent::at(collect((array) parent::proxies())
+                    ->merge($cachedProxies)
+                    ->unique()
+                    ->toArray()
+                );
+            }
+        });
     }
 }
