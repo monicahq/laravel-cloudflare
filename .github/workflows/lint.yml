@@ -11,4 +11,4 @@ concurrency:
 jobs:
   php:
     name: Lint PHP files
-    uses: monicahq/workflows/.github/workflows/lint_php.yml@v2
+    uses: monicahq/workflows/.github/workflows/lint_php.yml@v3
