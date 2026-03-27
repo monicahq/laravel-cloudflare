@@ -27,10 +27,10 @@ jobs:
     uses: monicahq/workflows/.github/workflows/library.yml@v4
     with:
       php-versions: "['8.2', '8.3', '8.4']"
-      laravel-versions: "['^11.0', '^12.0']"
+      laravel-versions: "['^11.0', '^12.0', '^13.0']"
       default-php-version: '8.4'
-      default-laravel-version: '^12.0'
-      matrix-exclude: "[]"
+      default-laravel-version: '^13.0'
+      matrix-exclude: "[{'php-version':'8.2','laravel-version':'^13.0'}]"
       project: monicahq_laravel-cloudflare
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
