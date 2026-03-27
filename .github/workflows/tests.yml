@@ -37,7 +37,7 @@ jobs:
 
   release:
     name: Release
-    uses: monicahq/workflows/.github/workflows/release.yml@v2
+    uses: monicahq/workflows/.github/workflows/release.yml@v4
     secrets:
       GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
     needs: tests
