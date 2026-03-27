@@ -6,10 +6,11 @@ use Illuminate\Http\Client\Factory as HttpClient;
 use Illuminate\Support\Facades\Http;
 use Monicahq\Cloudflare\Facades\CloudflareProxies;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class ReloadTest extends FeatureTestCase
 {
-    /** @test */
+    #[Test]
     public function it_loads_proxies()
     {
         CloudflareProxies::shouldReceive('load')
@@ -25,7 +26,7 @@ class ReloadTest extends FeatureTestCase
         $this->assertEquals(['expect'], $this->app['cache']->get('cloudflare.proxies'));
     }
 
-    /** @test */
+    #[Test]
     public function it_saves_address_in_cache()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
@@ -40,7 +41,7 @@ class ReloadTest extends FeatureTestCase
         $this->assertEquals(['0.0.0.0/20', '::1/32'], $this->app['cache']->get('cloudflare.proxies'));
     }
 
-    /** @test */
+    #[Test]
     public function it_deactivate_command()
     {
         config(['laravelcloudflare.enabled' => false]);

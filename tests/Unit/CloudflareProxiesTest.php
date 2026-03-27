@@ -5,11 +5,12 @@ namespace Monicahq\Cloudflare\Tests\Unit;
 use Illuminate\Support\Facades\Http;
 use Monicahq\Cloudflare\CloudflareProxies;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
+use PHPUnit\Framework\Attributes\Test;
 use UnexpectedValueException;
 
 class CloudflareProxiesTest extends FeatureTestCase
 {
-    /** @test */
+    #[Test]
     public function it_loads_empty_ips()
     {
         $loader = $this->app->make(CloudflareProxies::class);
@@ -20,7 +21,7 @@ class CloudflareProxiesTest extends FeatureTestCase
         $this->assertCount(0, $ips);
     }
 
-    /** @test */
+    #[Test]
     public function it_loads_real_mode()
     {
         $loader = $this->app->make(CloudflareProxies::class);
@@ -31,7 +32,7 @@ class CloudflareProxiesTest extends FeatureTestCase
         $this->assertTrue(count($ips) > 0);
     }
 
-    /** @test */
+    #[Test]
     public function it_loads_ipv4()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
@@ -49,7 +50,7 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    /** @test */
+    #[Test]
     public function it_loads_ipv6()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
@@ -67,7 +68,7 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    /** @test */
+    #[Test]
     public function it_loads_all_ips()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
@@ -87,7 +88,7 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    /** @test */
+    #[Test]
     public function it_loads_all_ips_when_zero_args()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
@@ -108,7 +109,7 @@ class CloudflareProxiesTest extends FeatureTestCase
         ], $ips);
     }
 
-    /** @test */
+    #[Test]
     public function it_throw_error_if_status_ko()
     {
         $this->app['config']->set('laravelcloudflare.url', 'https://fake');
