@@ -8,12 +8,13 @@ use Monicahq\Cloudflare\Facades\CloudflareProxies;
 use Monicahq\Cloudflare\Http\Middleware\TrustProxies;
 use Monicahq\Cloudflare\LaravelCloudflare;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class LaravelCloudflareTest extends FeatureTestCase
 {
     private static bool $run;
 
-    /** @test */
+    #[Test]
     public function it_call_callback()
     {
         static::$run = false;
@@ -38,7 +39,7 @@ class LaravelCloudflareTest extends FeatureTestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_call_load()
     {
         CloudflareProxies::shouldReceive('load')
