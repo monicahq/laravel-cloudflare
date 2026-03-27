@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Cache;
 use Monicahq\Cloudflare\Http\Middleware\TrustProxies;
 use Monicahq\Cloudflare\LaravelCloudflare;
 use Monicahq\Cloudflare\Tests\FeatureTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class TrustProxiesTest extends FeatureTestCase
 {
-    /** @test */
+    #[Test]
     public function it_sets_trusted_proxies()
     {
         Cache::shouldReceive('rememberForever')
@@ -26,7 +27,7 @@ class TrustProxiesTest extends FeatureTestCase
         $this->assertEquals(['expect'], $proxies);
     }
 
-    /** @test */
+    #[Test]
     public function it_sets_trusted_proxies_with_cache()
     {
         LaravelCloudflare::getProxiesUsing(function () {
@@ -48,7 +49,7 @@ class TrustProxiesTest extends FeatureTestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_sets_trusted_proxies()
     {
         Cache::shouldReceive('rememberForever')
@@ -64,7 +65,7 @@ class TrustProxiesTest extends FeatureTestCase
         $this->assertEquals([], $proxies);
     }
 
-    /** @test */
+    #[Test]
     public function it_deactivates_middleware()
     {
         config(['laravelcloudflare.enabled' => false]);
@@ -79,7 +80,7 @@ class TrustProxiesTest extends FeatureTestCase
         $this->assertFalse(Cache::has('cloudflare.proxies'));
     }
 
-    /** @test */
+    #[Test]
     public function it_sets_remote_addr()
     {
         config(['laravelcloudflare.replace_ip' => true]);
