@@ -24,7 +24,7 @@ permissions:
 jobs:
   tests:
     name: Run tests
-    uses: monicahq/workflows/.github/workflows/library.yml@v2
+    uses: monicahq/workflows/.github/workflows/library.yml@v4
     with:
       php-versions: "['8.2', '8.3', '8.4']"
       laravel-versions: "['^11.0', '^12.0']"
