@@ -23,24 +23,12 @@
             </errorLevel>
         </PropertyNotSetInConstructor>
 
-        <MissingClosureParamType>
-            <errorLevel type="suppress">
-                <file name="src/Commands/View.php" />
-            </errorLevel>
-        </MissingClosureParamType>
-
         <ClassMustBeFinal>
             <errorLevel type="suppress">
                 <file name="src/CloudflareProxies.php" />
                 <file name="src/Http/Middleware/TrustProxies.php" />
             </errorLevel>
         </ClassMustBeFinal>
-
-        <MissingClassConstType>
-            <errorLevel type="suppress">
-                <file name="src/CloudflareProxies.php" />
-            </errorLevel>
-        </MissingClassConstType>
 
     </issueHandlers>
 </psalm>
