@@ -22,7 +22,7 @@ class LaravelCloudflareTest extends FeatureTestCase
         LaravelCloudflare::getProxiesUsing(function () {
             static::$run = true;
 
-            return ['expect'];
+            return ['173.245.48.0/20'];
         });
 
         try {
@@ -33,7 +33,7 @@ class LaravelCloudflareTest extends FeatureTestCase
             $proxies = $request->getTrustedProxies();
 
             $this->assertTrue(static::$run);
-            $this->assertEquals(['expect'], $proxies);
+            $this->assertEquals(['173.245.48.0/20'], $proxies);
         } finally {
             LaravelCloudflare::getProxiesUsing(null);
         }
@@ -44,7 +44,7 @@ class LaravelCloudflareTest extends FeatureTestCase
     {
         CloudflareProxies::shouldReceive('load')
             ->once()
-            ->andReturn(['expect']);
+            ->andReturn(['173.245.48.0/20']);
 
         $request = new Request;
 
@@ -52,7 +52,7 @@ class LaravelCloudflareTest extends FeatureTestCase
 
         $proxies = $request->getTrustedProxies();
 
-        $this->assertEquals(['expect'], $proxies);
-        $this->assertEquals(['expect'], Cache::get('cloudflare.proxies'));
+        $this->assertEquals(['173.245.48.0/20'], $proxies);
+        $this->assertEquals(['173.245.48.0/20'], Cache::get('cloudflare.proxies'));
     }
 }
