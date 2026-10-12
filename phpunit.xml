@@ -9,6 +9,11 @@
       <directory suffix="Test.php">./tests</directory>
     </testsuite>
   </testsuites>
+  <groups>
+    <exclude>
+      <group>network</group>
+    </exclude>
+  </groups>
   <coverage/>
   <php>
     <env name="APP_ENV" value="testing"/>

@@ -1,3 +1,9 @@
 /vendor/
 .phpunit.result.cache
 composer.lock
+.phpunit.cache/
+*.log
+.env
+.idea/
+.vscode/
+.DS_Store

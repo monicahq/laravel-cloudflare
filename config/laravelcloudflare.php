@@ -8,7 +8,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | If you set it to false, the middleware and the reload command will never
-    | be executed.
+    | be executed: nothing is downloaded, Cloudflare is not trusted and the
+    | Cf-Connecting-Ip header is never used.
     |
     */
 
@@ -20,6 +21,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | This replace the request ip with the value of the Cf-Connecting-Ip header.
+    | The header is only used when the request comes from Cloudflare's IP
+    | blocks and holds a single valid IP address.
     |
     */
 
@@ -42,7 +45,8 @@ return [
     | Cloudflare main url
     |--------------------------------------------------------------------------
     |
-    | This is the url for the cloudflare api.
+    | This is the url for the cloudflare api. It must use https://, otherwise
+    | the IP blocks will not be downloaded.
     |
     */
 
@@ -69,5 +73,40 @@ return [
     */
 
     'ipv6-path' => 'ips-v6',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Download timeout
+    |--------------------------------------------------------------------------
+    |
+    | Maximum number of seconds a single download of the IP blocks may take.
+    |
+    */
+
+    'timeout' => (int) env('LARAVEL_CLOUDFLARE_TIMEOUT', 5),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Retry delay after a failed download
+    |--------------------------------------------------------------------------
+    |
+    | When the IP blocks cannot be downloaded while serving a request, wait
+    | this number of seconds before trying again.
+    |
+    */
+
+    'retry_after' => (int) env('LARAVEL_CLOUDFLARE_RETRY_AFTER', 60),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Stale list warning
+    |--------------------------------------------------------------------------
+    |
+    | Number of days after which the cached IP blocks are reported as stale.
+    | A stale list is still used, but a warning is logged.
+    |
+    */
+
+    'stale_after' => (int) env('LARAVEL_CLOUDFLARE_STALE_AFTER', 7),
 
 ];

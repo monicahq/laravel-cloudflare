@@ -3,8 +3,8 @@
 namespace Monicahq\Cloudflare\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Cache\Factory as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
+use Monicahq\Cloudflare\ProxyCache;
 
 final class View extends Command
 {
@@ -25,12 +25,32 @@ final class View extends Command
     /**
      * Execute the console command.
      */
-    public function handle(Cache $cache, Config $config): void
+    public function handle(ProxyCache $proxyCache, Config $config): int
     {
-        $proxies = $cache->store()->get($config->get('laravelcloudflare.cache'), []);
+        $list = $proxyCache->read();
 
-        $rows = array_map(fn ($value): array => [$value], $proxies);
+        if ($list === null) {
+            $this->warn('No Cloudflare IP ranges are cached. Run `php artisan cloudflare:reload` to load them.');
 
-        $this->table(['Address'], $rows);
+            return self::SUCCESS;
+        }
+
+        $this->table(['Address'], array_map(fn (string $value): array => [$value], $list->proxies));
+
+        $age = $list->ageInDays();
+
+        if ($list->refreshedAt === null || $age === null) {
+            $this->line('Last refreshed: unknown (cached by an earlier version)');
+        } else {
+            $this->line('Last refreshed: '.gmdate('c', $list->refreshedAt)." ({$age} days ago)");
+        }
+
+        $staleAfter = max(1, (int) $config->get('laravelcloudflare.stale_after', 7));
+
+        if ($list->isStale($staleAfter)) {
+            $this->warn("The cached list is STALE (older than {$staleAfter} days). Run `php artisan cloudflare:reload` and check your scheduler.");
+        }
+
+        return self::SUCCESS;
     }
 }
