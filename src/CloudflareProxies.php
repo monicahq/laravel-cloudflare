@@ -30,6 +30,7 @@ class CloudflareProxies
      * Use any IP addresses.
      *
      * @var int
+     * @psalm-var int
      */
     public const IP_VERSION_ANY = self::IP_VERSION_4 | self::IP_VERSION_6;
 
