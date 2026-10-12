@@ -146,7 +146,17 @@ final class ProxyCache
 
         try {
             return $store->lock($this->key('lock'), $timeout + 5)
-                ->block($timeout, fn (): array => $this->lookup()->proxies ?? $this->download());
+                ->block($timeout, function (): array {
+                    $cached = $this->lookup();
+                    if ($cached !== null) {
+                        return $cached->proxies;
+                    }
+                    if ($this->repository()->has($this->key('failed'))) {
+                        return [];
+                    }
+
+                    return $this->download();
+                });
         } catch (LockTimeoutException) {
             return $this->lookup()->proxies ?? [];
         }
