@@ -15,6 +15,7 @@ class CloudflareProxies
      * Use IPv4 addresses.
      *
      * @var int
+     * @psalm-var int
      */
     public const IP_VERSION_4 = 1 << 0;
 

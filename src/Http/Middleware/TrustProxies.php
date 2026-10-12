@@ -87,7 +87,7 @@ class TrustProxies extends Middleware
         }
 
         if ($proxies === '*' || $proxies === '**') {
-            parent::setTrustedProxyIpAddresses($request);
+            $this->setTrustedProxyIpAddressesToSpecificIps($request, [$request->getClientIp()]);
 
             return;
         }
